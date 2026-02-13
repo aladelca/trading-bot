@@ -35,13 +35,24 @@ class SupervisorAgent:
             practice=os.getenv("QUESTRADE_PRACTICE", "true").lower() in {"1", "true", "yes", "on"},
         )
         self.router = ExecutionRouter(self.broker)
+        cli_enabled = os.getenv("AGENT_CLI_ENABLED", "false").lower() in {"1", "true", "yes", "on"}
+        cli_allowed = {
+            c.strip()
+            for c in os.getenv("AGENT_CLI_ALLOWED_COMMANDS", "python").split(",")
+            if c.strip()
+        }
+        cli_timeout = float(os.getenv("AGENT_CLI_TIMEOUT_SECONDS", "5"))
+
         self.bridge = AgentSessionBridge(
             allowed_routes={
                 ("market-intel", "signal"),
                 ("signal", "risk"),
                 ("risk", "approval"),
                 ("approval", "execution"),
-            }
+            },
+            cli_enabled=cli_enabled,
+            cli_allowed_commands=cli_allowed,
+            cli_timeout_seconds=cli_timeout,
         )
 
     def run_one_cycle(self) -> list[StageEnvelope]:
