@@ -195,6 +195,12 @@ For deployment scaffold, see:
 - `scripts/deploy/validate_webhook_cutover.sh`
 - `scripts/deploy/capture_webhook_evidence.sh`
 - `apps/telegram_webhook/incident_report.py`
+- `apps/telegram_webhook/evidence_alert_pipeline.py`
+
+Generate evidence + alert routing manifests:
+```bash
+python apps/telegram_webhook/evidence_alert_pipeline.py
+```
 
 ## Plan tracking
 - Implementation status vs plan: `docs/IMPLEMENTATION_STATUS.md`
