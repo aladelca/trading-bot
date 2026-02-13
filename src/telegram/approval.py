@@ -28,11 +28,13 @@ class ApprovalGate:
         symbols_raw = os.getenv("AUTO_APPROVE_SYMBOLS", "")
         symbols = {s.strip().upper() for s in symbols_raw.split(",") if s.strip()}
         tier = choose_auto_approve_tier(signal.confidence)
+        allowed_tiers_raw = os.getenv("AUTO_APPROVE_ALLOWED_TIERS", "tier-1,tier-2")
+        allowed_tiers = {t.strip().lower() for t in allowed_tiers_raw.split(",") if t.strip()}
 
         min_conf = float(os.getenv("AUTO_APPROVE_MIN_CONFIDENCE", "0.0"))
         if signal.confidence < min_conf:
             return None
-        if not tier_allows_auto_approve(tier, signal.symbol, symbols):
+        if not tier_allows_auto_approve(tier, signal.symbol, symbols, allowed_tiers=allowed_tiers):
             return None
 
         return True, f"policy-auto:{tier}", request_id

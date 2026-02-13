@@ -11,7 +11,15 @@ def choose_auto_approve_tier(confidence: float) -> str:
     return "manual"
 
 
-def tier_allows_auto_approve(tier: str, symbol: str, allowed_symbols: set[str]) -> bool:
+def tier_allows_auto_approve(
+    tier: str,
+    symbol: str,
+    allowed_symbols: set[str],
+    allowed_tiers: set[str] | None = None,
+) -> bool:
     if tier == "manual":
+        return False
+    tiers = {t.lower() for t in (allowed_tiers or {"tier-1", "tier-2", "tier-3"})}
+    if tier.lower() not in tiers:
         return False
     return symbol.upper() in {s.upper() for s in allowed_symbols}

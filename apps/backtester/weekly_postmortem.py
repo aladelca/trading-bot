@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from apps.backtester.report import generate_kpi_report
-from src.agents.drift import detect_metric_drift, rollback_recommendation
+from src.agents.drift import detect_metric_drift, drift_severity, rollback_recommendation
 from src.agents.review_learning import generate_learning_recommendations
 
 
@@ -18,6 +18,7 @@ def generate_weekly_postmortem(
     kpi = generate_kpi_report(db_path=audit_db, portfolio_db_path=portfolio_db)
     recs = generate_learning_recommendations(kpi)
     drift_alerts = detect_metric_drift(kpi, baseline)
+    severity = drift_severity(drift_alerts)
     rollback = rollback_recommendation(drift_alerts)
 
     ts = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S")
@@ -33,9 +34,9 @@ def generate_weekly_postmortem(
         *(f"- {k}: {v}" for k, v in kpi.items()),
         "",
         "## Learning Recommendations",
-        *(f"- {r}" for r in recs),
+        *(f"- [{r['priority']}] ({r['topic']}) {r['recommendation']}" for r in recs),
         "",
-        "## Drift Alerts",
+        f"## Drift Alerts (severity: {severity})",
     ]
 
     if drift_alerts:
