@@ -29,6 +29,7 @@ Updated: 2026-02-13
 - ✅ Agent communication design baseline (envelope contract + bridge route policy scaffold)
 - ✅ Agent communication implementation baseline (CLI transport, command allow-list, timeout controls, manual bridge runner)
 - ✅ Agent communication observability baseline (audit table + retry/dead-letter policy + coverage tests)
+- ✅ Agent communication delivery guarantees baseline (retry backoff + dead-letter query/replay tooling)
 
 ## Partially Implemented
 - 🟡 Questrade live order path: symbolId + retry/idempotency + baseline order/session validation matrix implemented; SLA tuning and broker-specific edge-case matrix remain.
