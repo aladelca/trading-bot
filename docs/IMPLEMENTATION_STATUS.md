@@ -20,6 +20,7 @@ Updated: 2026-02-13
 - ✅ Agentic contracts + supervisor skeleton (`src/agents/*`)
 - ✅ Telegram webhook baseline with idempotent callback persistence (`apps/telegram_webhook/server.py`, `src/webhook/*`)
 - ✅ Webhook server/worker queue hardening baseline (health endpoint, payload size guard, retry/fail states)
+- ✅ Webhook production rollout assets (prod Nginx TLS template, systemd units, TLS bootstrap + healthcheck scripts, deployment checklist)
 - ✅ Broker hardening baseline (error taxonomy + retry/backoff + idempotency key propagation)
 - ✅ Advanced PnL baseline (realized/unrealized + avg cost + snapshot persistence)
 - ✅ Multi-currency PnL normalization baseline (base-currency conversion with FX map)
@@ -28,10 +29,10 @@ Updated: 2026-02-13
 
 ## Partially Implemented
 - 🟡 Questrade live order path: symbolId + retry/idempotency + baseline order/session validation matrix implemented; SLA tuning and broker-specific edge-case matrix remain.
-- 🟡 Portfolio/monitoring metrics: lightweight ledger and notional metrics added; advanced realized/unrealized PnL not finalized.
+- 🟡 Portfolio/monitoring metrics: ledger + realized/unrealized + FX normalization implemented; live FX source integration remains.
 
 ## Not Yet Implemented
-- ⬜ Production webhook deployment finalization (real cert provisioning, external DNS/domain, process supervision in target host).
+- ⬜ Production webhook host execution (apply templates on target VPS, DNS cutover, Telegram webhook registration validation).
 - ⬜ Full micro-live weekly postmortem template automation (basic runbook now exists in docs/runbooks.md).
 - ⬜ Advanced controlled-automation policy orchestration (basic env-driven auto-approve rules now implemented).
 
