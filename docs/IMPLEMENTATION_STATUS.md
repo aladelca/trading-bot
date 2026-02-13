@@ -19,8 +19,8 @@ Updated: 2026-02-13
 - ✅ End-to-end run path tests and integration checks
 
 ## Partially Implemented
-- 🟡 Questrade live order path: request wiring exists, but symbolId resolution is still placeholder.
-- 🟡 Portfolio/monitoring metrics: core event counters available, advanced realized/unrealized PnL not finalized.
+- 🟡 Questrade live order path: symbolId resolution added, but production hardening (order retry policy + broker-specific validation matrix) remains.
+- 🟡 Portfolio/monitoring metrics: lightweight ledger and notional metrics added; advanced realized/unrealized PnL not finalized.
 
 ## Not Yet Implemented
 - ⬜ Production webhook service for Telegram callbacks (currently polling-based).

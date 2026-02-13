@@ -57,10 +57,33 @@ class QuestradeClient(BrokerClient):
                 return float(row.get("buyingPower", 0.0))
         return 0.0
 
-    def build_order_payload(self, account_id: str, order: OrderRequest) -> dict:
+    def resolve_symbol_id(self, symbol: str) -> int | None:
+        token = self.token or self.ensure_token()
+        if not token:
+            return None
+
+        response = requests.get(
+            f"{token.api_server}v1/symbols/search",
+            headers=self._headers(),
+            params={"prefix": symbol},
+            timeout=15,
+        )
+        response.raise_for_status()
+        symbols = response.json().get("symbols", [])
+
+        exact = next((s for s in symbols if str(s.get("symbol", "")).upper() == symbol.upper()), None)
+        if exact and exact.get("symbolId") is not None:
+            return int(exact["symbolId"])
+
+        if symbols and symbols[0].get("symbolId") is not None:
+            return int(symbols[0]["symbolId"])
+
+        return None
+
+    def build_order_payload(self, account_id: str, order: OrderRequest, symbol_id: int) -> dict:
         return {
             "accountNumber": account_id,
-            "symbolId": None,
+            "symbolId": symbol_id,
             "quantity": order.quantity,
             "isAllOrNone": False,
             "isAnonymous": False,
@@ -83,8 +106,12 @@ class QuestradeClient(BrokerClient):
         if not accounts:
             return {"status": "blocked", "reason": "missing_account", "broker": "questrade"}
 
+        symbol_id = self.resolve_symbol_id(order.symbol)
+        if symbol_id is None:
+            return {"status": "blocked", "reason": "missing_symbol_id", "broker": "questrade"}
+
         account_id = str(accounts[0].get("number"))
-        payload = self.build_order_payload(account_id, order)
+        payload = self.build_order_payload(account_id, order, symbol_id)
         response = requests.post(
             f"{token.api_server}v1/accounts/{account_id}/orders",
             headers=self._headers(),

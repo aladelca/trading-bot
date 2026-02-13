@@ -63,3 +63,6 @@ python apps/backtester/report.py
 
 ## Plan tracking
 - Implementation status vs plan: `docs/IMPLEMENTATION_STATUS.md`
+
+## Portfolio ledger
+Executed/paper/dry-run trade intents are recorded in `data/portfolio.db` for lightweight metrics.

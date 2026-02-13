@@ -9,6 +9,7 @@ from src.config.models import PortfolioState, RiskPolicy
 from src.config.settings import AppSettings
 from src.data.news_ingestors.free_feed import fetch_free_news_events
 from src.execution.router import ExecutionRouter
+from src.portfolio.ledger import PortfolioLedger
 from src.risk.hard_limits import RiskLimitError, enforce_hard_limits
 from src.risk.position_sizing import position_size_from_risk
 from src.signals.generator import generate_signal_from_news_event
@@ -29,6 +30,7 @@ def run_once(settings: AppSettings, policy: RiskPolicy, audit: AuditLogger) -> l
         practice=os.getenv("QUESTRADE_PRACTICE", "true").lower() in {"1", "true", "yes", "on"},
     )
     router = ExecutionRouter(broker)
+    ledger = PortfolioLedger(os.getenv("PORTFOLIO_DB_PATH", "data/portfolio.db"))
 
     fills: list[dict] = []
 
@@ -70,6 +72,19 @@ def run_once(settings: AppSettings, policy: RiskPolicy, audit: AuditLogger) -> l
         fill = router.execute(order, paper_mode=settings.runtime.paper_mode)
         fills.append(fill)
         audit.log("fill", fill)
+
+        mode = fill.get("mode", "unknown")
+        status = fill.get("status", "unknown")
+        if status in {"filled", "dry-run", "submitted", "paper-simulated"}:
+            ledger.record_trade(
+                symbol=signal.symbol,
+                side=signal.side,
+                quantity=qty,
+                price=signal.entry,
+                status=status,
+                mode=mode,
+            )
+
         state.trades_today += 1
 
     return fills

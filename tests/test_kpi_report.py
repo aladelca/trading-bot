@@ -10,9 +10,10 @@ def test_kpi_report_counts(tmp_path):
     audit.log("fill", {"symbol": "SPY"})
     audit.log("signal_rejected", {"reason": "x"})
 
-    report = generate_kpi_report(str(db))
+    report = generate_kpi_report(str(db), str(tmp_path / "portfolio.db"))
     assert report["events_total"] == 4
     assert report["approvals_total"] == 2
     assert report["approvals_yes"] == 1
     assert report["fills_total"] == 1
     assert report["signals_rejected"] == 1
+    assert report["ledger_trades_total"] == 0
