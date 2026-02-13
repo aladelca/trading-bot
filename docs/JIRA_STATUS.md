@@ -1,0 +1,40 @@
+# Trading Bot - Jira Style Status
+
+_Last updated: 2026-02-13_
+
+## Epic TBOT-EPIC-1: Core v1 Trading Pipeline
+- Status: **IN PROGRESS**
+- Progress: 80%
+
+### Done
+- TBOT-1 Scaffold + config baseline ✅
+- TBOT-2 Risk engine + sizing ✅
+- TBOT-3 Telegram approval flow (polling) ✅
+- TBOT-4 Audit store + decision persistence ✅
+- TBOT-5 Live guardrails + dry-run routing ✅
+- TBOT-6 News normalization + dedup + relevance filter ✅
+- TBOT-7 KPI reporting baseline ✅
+- TBOT-8 SymbolId resolution baseline ✅
+- TBOT-9 Portfolio ledger baseline ✅
+- TBOT-10 Ops runbook baseline ✅
+
+### In Progress
+- TBOT-11 Agentic supervisor architecture and contracts 🔄
+
+### To Do
+- TBOT-12 Telegram production webhook + idempotent callback store
+- TBOT-13 Broker retry matrix and error taxonomy hardening
+- TBOT-14 Advanced realized/unrealized PnL engine
+- TBOT-15 Weekly postmortem automation
+
+## Epic TBOT-EPIC-2: Agentic Autonomy with Governance
+- Status: **PLANNED**
+- Progress: 20%
+
+### In Progress
+- TBOT-A1 Multi-agent contracts and supervisor skeleton 🔄
+
+### To Do
+- TBOT-A2 Learning/review agent reports
+- TBOT-A3 Controlled auto-approve policy escalation matrix
+- TBOT-A4 Drift detection and rollback recommendations

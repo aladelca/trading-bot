@@ -17,6 +17,7 @@ Updated: 2026-02-13
 - ✅ Paper execution path
 - ✅ KPI report utility from audit DB (`apps/backtester/report.py`)
 - ✅ End-to-end run path tests and integration checks
+- ✅ Agentic contracts + supervisor skeleton (`src/agents/*`)
 
 ## Partially Implemented
 - 🟡 Questrade live order path: symbolId resolution added, but production hardening (order retry policy + broker-specific validation matrix) remains.
