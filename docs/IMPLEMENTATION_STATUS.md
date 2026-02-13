@@ -20,6 +20,7 @@ Updated: 2026-02-13
 - ✅ Agentic contracts + supervisor skeleton (`src/agents/*`)
 - ✅ Telegram webhook baseline with idempotent callback persistence (`apps/telegram_webhook/server.py`, `src/webhook/*`)
 - ✅ Broker hardening baseline (error taxonomy + retry/backoff + idempotency key propagation)
+- ✅ Advanced PnL baseline (realized/unrealized + avg cost + snapshot persistence)
 
 ## Partially Implemented
 - 🟡 Questrade live order path: symbolId + retry/idempotency baseline implemented; broker-specific validation matrix and SLA tuning remain.
