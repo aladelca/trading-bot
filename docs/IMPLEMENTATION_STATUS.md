@@ -26,7 +26,7 @@ Updated: 2026-02-13
 - ✅ Governance baselines: learning recommendations + drift detection + rollback guidance + escalation tiers
 
 ## Partially Implemented
-- 🟡 Questrade live order path: symbolId + retry/idempotency baseline implemented; broker-specific validation matrix and SLA tuning remain.
+- 🟡 Questrade live order path: symbolId + retry/idempotency + baseline order/session validation matrix implemented; SLA tuning and broker-specific edge-case matrix remain.
 - 🟡 Portfolio/monitoring metrics: lightweight ledger and notional metrics added; advanced realized/unrealized PnL not finalized.
 
 ## Not Yet Implemented
