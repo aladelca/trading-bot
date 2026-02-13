@@ -161,6 +161,13 @@ python apps/backtester/governance_versioning.py \
   --payload-json '{"recommended_auto_approve_min_confidence":0.9}'
 ```
 
+Governance deployment sign-off matrix:
+```bash
+python apps/backtester/governance_signoff.py \
+  --signoff-json '{"risk_owner_approved":true,"ops_owner_approved":true,"rollback_plan_attached":true,"kpi_snapshot_attached":true,"dry_run_validation_passed":true}'
+```
+See: `docs/governance-deployment-checklist.md`
+
 Manual CLI bridge invocation example:
 ```bash
 python apps/orchestrator/agent_cli_bridge.py \
