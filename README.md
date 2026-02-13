@@ -218,6 +218,16 @@ python apps/backtester/governance_emergency_override.py \
   --changes-json '{"AUTO_APPROVE_ENABLED": false}'
 ```
 
+Governance emergency override multisig + incident linkage:
+```bash
+python apps/backtester/governance_emergency_multisig.py \
+  --policy-id auto-approve-policy \
+  --incident-id inc-2026-001 \
+  --approvers adrian,risk-lead \
+  --min-approvals 2 \
+  --reason "critical incident containment"
+```
+
 Governance reconciliation cadence + stale decision cleanup:
 ```bash
 python apps/backtester/governance_reconciliation.py \

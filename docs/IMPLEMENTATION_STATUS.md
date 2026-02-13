@@ -52,6 +52,7 @@ Updated: 2026-02-13
 - ✅ Governance deployment sign-off baseline (checklist + mandatory gate evaluator)
 - ✅ Governance drift acknowledgement baseline (ack payload + expiry evaluator + cli)
 - ✅ Governance emergency override baseline (override artifact + expiry enforcement + cli)
+- ✅ Governance emergency override multisig baseline (incident-linked quorum approvals)
 - ✅ Governance reconciliation baseline (review cadence checks + stale decision cleanup plans)
 - ✅ Governance threshold tuning baseline from paper KPI metrics (recommended min confidence + allowed tiers)
 
