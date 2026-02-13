@@ -119,6 +119,15 @@ Weekly governance calibration report artifact:
 python apps/backtester/weekly_governance_calibration.py
 ```
 
+Scheduled governance delivery manifest:
+```bash
+python apps/backtester/scheduled_governance_delivery.py
+```
+Install cron helper:
+```bash
+bash scripts/deploy/install_governance_calibration_cron.sh
+```
+
 Governance threshold tuning from paper KPIs:
 ```bash
 python apps/backtester/threshold_tuning.py \

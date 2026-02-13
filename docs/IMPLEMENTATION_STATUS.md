@@ -35,6 +35,7 @@ Updated: 2026-02-13
 - ✅ Governance policy simulation sandbox baseline (what-if approvals/risk with CLI scenario runner)
 - ✅ Governance threshold calibration baseline (replay-pack candidate ranking + calibration CLI)
 - ✅ Weekly governance calibration artifact baseline (weekly report generator with KPI snapshot + candidate ranking)
+- ✅ Scheduled governance calibration delivery baseline (manifest generation + cron helper + routing envs)
 - ✅ Governance threshold tuning baseline from paper KPI metrics (recommended min confidence + allowed tiers)
 
 ## Partially Implemented
