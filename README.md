@@ -168,6 +168,15 @@ python apps/backtester/governance_signoff.py \
 ```
 See: `docs/governance-deployment-checklist.md`
 
+Governance drift acknowledgement + expiry evaluation:
+```bash
+python apps/backtester/governance_drift_ack.py \
+  --policy-id auto-approve-policy \
+  --severity high \
+  --acknowledged-by adrian \
+  --valid-minutes 120
+```
+
 Manual CLI bridge invocation example:
 ```bash
 python apps/orchestrator/agent_cli_bridge.py \

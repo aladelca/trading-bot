@@ -44,6 +44,7 @@ Updated: 2026-02-13
 - ✅ Governance recommendation apply guardrails baseline (safety checks + rollback template generation)
 - ✅ Governance recommendation audit/versioning ledger baseline (versioned governance decisions in audit DB)
 - ✅ Governance deployment sign-off baseline (checklist + mandatory gate evaluator)
+- ✅ Governance drift acknowledgement baseline (ack payload + expiry evaluator + cli)
 - ✅ Governance threshold tuning baseline from paper KPI metrics (recommended min confidence + allowed tiers)
 
 ## Partially Implemented
