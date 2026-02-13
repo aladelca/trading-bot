@@ -1,0 +1,9 @@
+[
+  {"confidence": 0.96, "pnl_outcome": 1.8, "approved": true},
+  {"confidence": 0.94, "pnl_outcome": 1.1, "approved": true},
+  {"confidence": 0.91, "pnl_outcome": 0.4, "approved": true},
+  {"confidence": 0.89, "pnl_outcome": -0.1, "approved": false},
+  {"confidence": 0.87, "pnl_outcome": -0.4, "approved": false},
+  {"confidence": 0.85, "pnl_outcome": 0.2, "approved": true},
+  {"confidence": 0.82, "pnl_outcome": -0.6, "approved": false}
+]
