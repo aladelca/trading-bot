@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from dataclasses import asdict
 
 from src.broker.base import OrderRequest
@@ -23,9 +24,9 @@ def run_once(settings: AppSettings, policy: RiskPolicy, audit: AuditLogger) -> l
     )
 
     broker = QuestradeClient(
-        client_id="",
-        refresh_token="",
-        practice=True,
+        client_id=os.getenv("QUESTRADE_CLIENT_ID", ""),
+        refresh_token=os.getenv("QUESTRADE_REFRESH_TOKEN", ""),
+        practice=os.getenv("QUESTRADE_PRACTICE", "true").lower() in {"1", "true", "yes", "on"},
     )
     router = ExecutionRouter(broker)
 

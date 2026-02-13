@@ -27,7 +27,7 @@ class ApprovalGate:
 
         if not self.client:
             print("APPROVAL_REQUEST_FALLBACK", payload)
-            return True, "fallback", request_id
+            return False, "fallback", request_id
 
         text = (
             f"Trade approval needed\n"
