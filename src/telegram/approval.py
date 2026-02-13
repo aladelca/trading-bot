@@ -9,12 +9,7 @@ from src.telegram.client import TelegramClient, TelegramConfig
 
 
 class ApprovalGate:
-    """Approval gate with Telegram integration fallback.
-
-    - required=False: bypasses approval.
-    - required=True + telegram config: sends approval message and waits.
-    - required=True without telegram config: logs payload and auto-approves (temporary fallback).
-    """
+    """Approval gate with Telegram integration fallback."""
 
     def __init__(self, required: bool = True, timeout_seconds: int = 20):
         self.required = required
@@ -23,16 +18,16 @@ class ApprovalGate:
         chat_id = os.getenv("TELEGRAM_CHAT_ID", "")
         self.client = TelegramClient(TelegramConfig(token, chat_id), timeout_seconds) if token and chat_id else None
 
-    def request(self, signal: TradeSignal) -> bool:
+    def request_with_meta(self, signal: TradeSignal) -> tuple[bool, str, str]:
         if not self.required:
-            return True
+            return True, "bypass", ""
 
         request_id = uuid4().hex[:10]
         payload = asdict(signal)
 
         if not self.client:
             print("APPROVAL_REQUEST_FALLBACK", payload)
-            return True
+            return True, "fallback", request_id
 
         text = (
             f"Trade approval needed\n"
@@ -45,5 +40,9 @@ class ApprovalGate:
             f"ID: {request_id}"
         )
         self.client.send_approval_request(text=text, request_id=request_id)
-        decision = self.client.wait_for_decision(request_id)
-        return bool(decision)
+        decision = bool(self.client.wait_for_decision(request_id))
+        return decision, "telegram", request_id
+
+    def request(self, signal: TradeSignal) -> bool:
+        decision, _source, _id = self.request_with_meta(signal)
+        return decision

@@ -2,10 +2,12 @@ from __future__ import annotations
 
 from dataclasses import asdict
 
+from src.broker.base import OrderRequest
+from src.broker.questrade.client import QuestradeClient
 from src.config.models import PortfolioState, RiskPolicy
 from src.config.settings import AppSettings
 from src.data.news_ingestors.free_feed import fetch_free_news_events
-from src.execution.paper_engine import PaperExecutionEngine
+from src.execution.router import ExecutionRouter
 from src.risk.hard_limits import RiskLimitError, enforce_hard_limits
 from src.risk.position_sizing import position_size_from_risk
 from src.signals.generator import generate_signal_from_news_event
@@ -19,7 +21,13 @@ def run_once(settings: AppSettings, policy: RiskPolicy, audit: AuditLogger) -> l
         required=settings.runtime.approval_required,
         timeout_seconds=settings.runtime.approval_timeout_seconds,
     )
-    paper = PaperExecutionEngine()
+
+    broker = QuestradeClient(
+        client_id="",
+        refresh_token="",
+        practice=True,
+    )
+    router = ExecutionRouter(broker)
 
     fills: list[dict] = []
 
@@ -44,17 +52,21 @@ def run_once(settings: AppSettings, policy: RiskPolicy, audit: AuditLogger) -> l
             audit.log("signal_rejected", {"reason": "invalid_position_size", **asdict(signal)})
             continue
 
-        approved = approval.request(signal)
-        audit.log("approval", {"approved": approved, **asdict(signal)})
+        approved, source, request_id = approval.request_with_meta(signal)
+        audit.log("approval", {"approved": approved, "source": source, "request_id": request_id, **asdict(signal)})
+        if request_id:
+            audit.save_decision(request_id, approved, source)
         if not approved:
             continue
 
-        fill = paper.execute(
-            signal.symbol,
-            signal.side,
-            qty,
+        order = OrderRequest(
+            symbol=signal.symbol,
+            side=signal.side,
+            quantity=qty,
+            order_type="market",
             extended_hours=settings.runtime.allow_extended_hours,
         )
+        fill = router.execute(order, paper_mode=settings.runtime.paper_mode)
         fills.append(fill)
         audit.log("fill", fill)
         state.trades_today += 1
