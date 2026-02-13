@@ -32,6 +32,7 @@ _Last updated: 2026-02-13_
 - WEBHOOK-HARDEN-4 Host evidence capture + post-cutover incident automation baseline ✅
 - WEBHOOK-HARDEN-5 Automated evidence upload + incident alert routing baseline ✅
 - WEBHOOK-HARDEN-6 Alert delivery connector + retry policy baseline ✅
+- WEBHOOK-HARDEN-7 Provider delivery integration + signed receipt baseline ✅
 - PNL-FX-1 Multi-currency PnL normalization baseline ✅
 - BROKER-VALID-2 Broker-specific edge-case validation matrix expansion ✅
 - BROKER-VALID-3 Validation rollout toggles + broker rejection telemetry baseline ✅

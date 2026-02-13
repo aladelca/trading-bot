@@ -1,10 +1,10 @@
 # Product Backlog (Prioritized)
 
 ## P1 (High)
-1. **WEBHOOK-HARDEN-7** - Delivery connector integration to provider + signed delivery receipts
-2. **TBOT-A21** - Governance emergency override multi-signature approvals + incident linkage
-3. **TBOT-A22** - Governance reconciliation drift auto-ticketing + owner assignment
-4. **BROKER-VALID-7** - Validation anomaly auto-remediation runbook execution hooks
+1. **TBOT-A21** - Governance emergency override multi-signature approvals + incident linkage
+2. **TBOT-A22** - Governance reconciliation drift auto-ticketing + owner assignment
+3. **BROKER-VALID-7** - Validation anomaly auto-remediation runbook execution hooks
+4. **WEBHOOK-HARDEN-8** - Provider ack verification and receipt tamper validation pipeline
 
 ## P2 (Medium)
 6. **TBOT-A8** - Agent communication observability (delivery audit + retry/dead-letter policy)
@@ -13,6 +13,10 @@
 9. Policy simulation sandbox for approval/risk changes
 
 ## Completed Recently
+- **WEBHOOK-HARDEN-7** - Delivery connector integration + signed receipt baseline
+  - Provider connector abstraction in delivery flow
+  - Delivery receipt artifact generation on successful send
+  - Optional HMAC-SHA256 signatures for receipt integrity
 - **BROKER-VALID-6** - Broker validation anomaly triage playbook + remediation matrix baseline
   - Alert-to-owner/severity triage evaluator from validation metrics
   - Deterministic remediation action matrix for blocked/error/auto-revert anomalies
