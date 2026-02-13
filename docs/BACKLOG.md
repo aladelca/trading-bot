@@ -1,11 +1,10 @@
 # Product Backlog (Prioritized)
 
 ## P1 (High)
-1. **TBOT-A6** - Agent communication bridge design (CLI/session protocol + security model)
-2. **TBOT-A7** - Agent communication bridge implementation (routing, auth allow-list, correlation IDs)
-3. **TBOT-A5** - Governance threshold tuning from live paper metrics
-4. **BROKER-VALID-2** - Broker-specific edge-case matrix expansion
-5. **WEBHOOK-HARDEN-3** - VPS execution and DNS/webhook cutover validation
+1. **TBOT-A7** - Agent communication bridge implementation (routing, auth allow-list, correlation IDs)
+2. **TBOT-A5** - Governance threshold tuning from live paper metrics
+3. **BROKER-VALID-2** - Broker-specific edge-case matrix expansion
+4. **WEBHOOK-HARDEN-3** - VPS execution and DNS/webhook cutover validation
 
 ## P2 (Medium)
 6. **TBOT-A8** - Agent communication observability (delivery audit + retry/dead-letter policy)
@@ -14,6 +13,9 @@
 9. Policy simulation sandbox for approval/risk changes
 
 ## Completed Recently
+- **TBOT-A6** - Agent communication bridge design baseline
+  - Extended stage envelope contract with source/target/transport/correlation
+  - Defined Sprint-3 comms track and protocol expectations
 - **WEBHOOK-HARDEN-2** - Production rollout assets
   - Nginx production TLS template
   - systemd service units for server + worker
