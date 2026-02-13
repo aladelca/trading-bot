@@ -1,10 +1,10 @@
 # Product Backlog (Prioritized)
 
 ## P1 (High)
-1. **TBOT-A15** - Governance recommendation application guardrails + rollback template
-2. **TBOT-A16** - Governance recommendation audit and versioning ledger
-3. **BROKER-VALID-4** - Validation mode drift monitoring + hard-fail auto-revert policy
-4. **WEBHOOK-HARDEN-5** - Automated evidence upload + incident alert routing
+1. **TBOT-A16** - Governance recommendation audit and versioning ledger
+2. **BROKER-VALID-4** - Validation mode drift monitoring + hard-fail auto-revert policy
+3. **WEBHOOK-HARDEN-5** - Automated evidence upload + incident alert routing
+4. **TBOT-A17** - Governance change deployment checklist + sign-off matrix
 
 ## P2 (Medium)
 6. **TBOT-A8** - Agent communication observability (delivery audit + retry/dead-letter policy)
@@ -13,6 +13,10 @@
 9. Policy simulation sandbox for approval/risk changes
 
 ## Completed Recently
+- **TBOT-A15** - Governance recommendation application guardrails baseline
+  - Guardrail evaluator for approved recommendation packages
+  - Rollback template generator for prior-policy restoration
+  - CLI helper and tests for apply/rollback artifacts
 - **WEBHOOK-HARDEN-4** - Host evidence + incident automation baseline
   - Evidence capture script (`scripts/deploy/capture_webhook_evidence.sh`)
   - Incident report generator (`apps/telegram_webhook/incident_report.py`)

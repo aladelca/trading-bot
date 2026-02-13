@@ -144,6 +144,13 @@ python apps/backtester/governance_approval_workflow.py \
   --reason "keep risk tight"
 ```
 
+Governance apply guardrails + rollback template:
+```bash
+python apps/backtester/governance_apply_guardrails.py \
+  --approved-package-json '{"id":"r1","status":"approved","final_recommendation":{"recommended_auto_approve_min_confidence":0.9,"recommended_allowed_tiers":["tier-1","tier-2"]}}' \
+  --previous-policy-json '{"AUTO_APPROVE_MIN_CONFIDENCE":0.92,"AUTO_APPROVE_ALLOWED_TIERS":"tier-1,tier-2"}'
+```
+
 Manual CLI bridge invocation example:
 ```bash
 python apps/orchestrator/agent_cli_bridge.py \
