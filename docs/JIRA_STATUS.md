@@ -19,11 +19,14 @@ _Last updated: 2026-02-13_
 - TBOT-10 Ops runbook baseline ✅
 
 ### In Progress
-- TBOT-11 Agentic supervisor architecture and contracts 🔄
+- TBOT-13 Broker retry matrix and error taxonomy hardening 🔄
+
+### Done
+- TBOT-11 Agentic supervisor architecture and contracts ✅
+- TBOT-12 Telegram production webhook + idempotent callback store ✅
 
 ### To Do
-- TBOT-12 Telegram production webhook + idempotent callback store
-- TBOT-13 Broker retry matrix and error taxonomy hardening
+- TBOT-14 Advanced realized/unrealized PnL engine
 - TBOT-14 Advanced realized/unrealized PnL engine
 - TBOT-15 Weekly postmortem automation
 

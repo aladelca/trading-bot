@@ -67,6 +67,13 @@ Run the new supervised multi-agent pipeline skeleton:
 python apps/orchestrator/agentic_main.py
 ```
 
+## Telegram webhook mode
+Run production-style webhook receiver (with secret-token validation):
+```bash
+python apps/telegram_webhook/server.py
+```
+Set env vars: `TELEGRAM_WEBHOOK_SECRET`, `WEBHOOK_HOST`, `WEBHOOK_PORT`, `WEBHOOK_PATH`, `WEBHOOK_DB_PATH`.
+
 ## Plan tracking
 - Implementation status vs plan: `docs/IMPLEMENTATION_STATUS.md`
 - Jira-style status board: `docs/JIRA_STATUS.md`
