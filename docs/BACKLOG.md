@@ -1,16 +1,20 @@
 # Product Backlog (Prioritized)
 
 ## P1 (High)
-1. **TBOT-A2** - Review/Learning agent recommendations hardening
-2. **TBOT-A3** - Controlled automation escalation policy hardening
-3. **TBOT-A4** - Drift detection tuning + rollback policy automation
+1. **TBOT-A5** - Governance threshold tuning from live paper metrics
+2. **WEBHOOK-HARDEN-2** - Production webhook rollout finalization (real cert provisioning + domain + supervised host process)
+3. **BROKER-VALID-2** - Broker-specific edge-case matrix expansion
 
 ## P2 (Medium)
-4. Webhook deployment finalization (real cert provisioning + domain + supervised process on host)
-5. Broker validation matrix tuning by order type/session (baseline implemented; extend for broker-specific edge cases)
-6. Multi-currency PnL normalization (baseline implemented; extend to live FX feed and cross-rate validation)
+4. Multi-currency PnL live FX feed + cross-rate validation
+5. Weekly postmortem scheduler + distribution channel integration
+6. Policy simulation sandbox for approval/risk changes
 
 ## Completed Recently
+- **TBOT-A2/A3/A4** - Governance hardening baseline
+  - Structured learning recommendations
+  - Tier-aware auto-approve escalation controls
+  - Drift severity + rollback profile recommendations
 - **PNL-FX-1** - Multi-currency PnL normalization baseline
 - **TBOT-15** - Weekly postmortem automation baseline
 - **WEBHOOK-HARDEN-1** - Deployment hardening baseline

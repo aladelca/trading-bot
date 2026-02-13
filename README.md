@@ -114,6 +114,7 @@ You can enable strict auto-approval for high-confidence symbols only:
 - `AUTO_APPROVE_ENABLED=true`
 - `AUTO_APPROVE_MIN_CONFIDENCE=0.90`
 - `AUTO_APPROVE_SYMBOLS=SPY,QQQ`
+- `AUTO_APPROVE_ALLOWED_TIERS=tier-1,tier-2`
 
 Default is disabled (`false`).
 
