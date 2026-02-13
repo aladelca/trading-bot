@@ -31,6 +31,7 @@ Updated: 2026-02-13
 - ✅ Broker validation drift-control baseline v4 (report-only expiry + hard-fail auto-revert)
 - ✅ Broker validation metrics baseline v5 (dashboard metrics + threshold alerts)
 - ✅ Questrade API capability expansion baseline (balances/positions/executions/activities/quotes/candles + snapshot helper)
+- ✅ Questrade retail read-only safety baseline (live submit block by default + manual trade ticket artifacts)
 - ✅ Advanced PnL baseline (realized/unrealized + avg cost + snapshot persistence)
 - ✅ Multi-currency PnL normalization baseline (base-currency conversion with FX map)
 - ✅ Weekly postmortem automation baseline (`apps/backtester/weekly_postmortem.py`)

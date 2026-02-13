@@ -224,6 +224,8 @@ class QuestradeClient(BrokerClient):
             }
 
     def submit_order(self, order: OrderRequest, dry_run: bool = True, request_id: str = "") -> dict:
+        account_mode = os.getenv("QUESTRADE_ACCOUNT_MODE", "partner_trading").strip().lower()
+
         validation = validate_order_matrix(order, broker="questrade")
         rollout = resolve_validation_mode(
             configured_mode=os.getenv("BROKER_VALIDATION_MODE", "enforce"),
@@ -257,6 +259,15 @@ class QuestradeClient(BrokerClient):
             if validation_warning:
                 out["validation_warning"] = validation_warning
             return out
+
+        if account_mode != "partner_trading":
+            return {
+                "status": "blocked",
+                "reason": "questrade_retail_read_only",
+                "broker": "questrade",
+                "account_mode": account_mode,
+                "detail": "Live API order submission disabled for retail read-only mode.",
+            }
 
         token = self.token or self.ensure_token()
         if not token:

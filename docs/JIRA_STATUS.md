@@ -38,6 +38,7 @@ _Last updated: 2026-02-13_
 - BROKER-VALID-4 Validation mode drift monitoring + hard-fail auto-revert policy ✅
 - BROKER-VALID-5 Validation rollout metrics dashboard + alert thresholds ✅
 - BROKER-API-1 Questrade API capability expansion (balances/positions/quotes/candles snapshot support) ✅
+- BROKER-ACCESS-1 Questrade retail read-only safety mode + manual trade tickets ✅
 
 ## Epic TBOT-EPIC-2: Agentic Autonomy with Governance
 - Status: **IN PROGRESS**
