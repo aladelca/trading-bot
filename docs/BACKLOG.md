@@ -1,10 +1,10 @@
 # Product Backlog (Prioritized)
 
 ## P1 (High)
-1. **TBOT-A16** - Governance recommendation audit and versioning ledger
-2. **BROKER-VALID-4** - Validation mode drift monitoring + hard-fail auto-revert policy
-3. **WEBHOOK-HARDEN-5** - Automated evidence upload + incident alert routing
-4. **TBOT-A17** - Governance change deployment checklist + sign-off matrix
+1. **BROKER-VALID-4** - Validation mode drift monitoring + hard-fail auto-revert policy
+2. **WEBHOOK-HARDEN-5** - Automated evidence upload + incident alert routing
+3. **TBOT-A17** - Governance change deployment checklist + sign-off matrix
+4. **TBOT-A18** - Governance policy drift acknowledgements + expiry controls
 
 ## P2 (Medium)
 6. **TBOT-A8** - Agent communication observability (delivery audit + retry/dead-letter policy)
@@ -13,6 +13,10 @@
 9. Policy simulation sandbox for approval/risk changes
 
 ## Completed Recently
+- **TBOT-A16** - Governance recommendation audit/versioning ledger baseline
+  - Added governance_versions ledger table in audit DB
+  - Added version record/list helpers and CLI
+  - Added tests for version history ordering
 - **TBOT-A15** - Governance recommendation application guardrails baseline
   - Guardrail evaluator for approved recommendation packages
   - Rollback template generator for prior-policy restoration
