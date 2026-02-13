@@ -3,8 +3,10 @@
 Human-in-the-loop scaffold for a news-driven **stocks/ETF** trading bot (Questrade-first), with Telegram approval before execution.
 
 ## Current status
-- ✅ v1 scaffold only (paper mode default)
+- ✅ v1 scaffold (paper mode default)
 - ✅ Risk gates + sizing
+- ✅ Symbol whitelist enforcement
+- ✅ Signal + approval + fill audit logging (SQLite)
 - ✅ Signal placeholder from free news feed interface
 - ✅ Telegram approval gate placeholder
 - ✅ Questrade adapter stub (credentials pending)

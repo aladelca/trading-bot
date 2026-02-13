@@ -4,13 +4,19 @@ from src.signals.models import TradeSignal
 
 
 class ApprovalGate:
-    """Telegram approval placeholder.
+    """Approval placeholder.
 
-    In v1 scaffold we simulate a required approval and return True by default.
-    Replace with real Telegram API callback flow.
+    required=True: currently auto-approves while printing payload.
+    required=False: bypasses approval gate.
+    Replace with real Telegram callback flow.
     """
 
+    def __init__(self, required: bool = True):
+        self.required = required
+
     def request(self, signal: TradeSignal) -> bool:
+        if not self.required:
+            return True
         payload = asdict(signal)
         print("APPROVAL_REQUEST", payload)
         return True
