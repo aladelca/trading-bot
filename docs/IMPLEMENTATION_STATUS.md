@@ -23,6 +23,7 @@ Updated: 2026-02-13
 - ✅ Webhook production rollout assets (prod Nginx TLS template, systemd units, TLS bootstrap + healthcheck scripts, deployment checklist)
 - ✅ Webhook VPS cutover validation baseline (go/no-go checklist + host validation script)
 - ✅ Webhook host evidence/incident baseline (evidence snapshot script + incident report generator)
+- ✅ Webhook evidence/alert routing baseline (evidence manifest + incident routing manifest + pipeline)
 - ✅ Broker hardening baseline (error taxonomy + retry/backoff + idempotency key propagation)
 - ✅ Broker validation edge-matrix baseline v2 (symbol/side hygiene + quantity caps + Questrade extended-hours constraints)
 - ✅ Broker validation rollout/telemetry baseline v3 (`BROKER_VALIDATION_MODE` + rejection source telemetry)

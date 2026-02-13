@@ -1,10 +1,10 @@
 # Product Backlog (Prioritized)
 
 ## P1 (High)
-1. **WEBHOOK-HARDEN-5** - Automated evidence upload + incident alert routing
-2. **TBOT-A17** - Governance change deployment checklist + sign-off matrix
-3. **TBOT-A18** - Governance policy drift acknowledgements + expiry controls
-4. **BROKER-VALID-5** - Broker validation rollout metrics dashboard + alert thresholds
+1. **TBOT-A17** - Governance change deployment checklist + sign-off matrix
+2. **TBOT-A18** - Governance policy drift acknowledgements + expiry controls
+3. **BROKER-VALID-5** - Broker validation rollout metrics dashboard + alert thresholds
+4. **WEBHOOK-HARDEN-6** - Alert delivery connector + retry policy for routing manifests
 
 ## P2 (Medium)
 6. **TBOT-A8** - Agent communication observability (delivery audit + retry/dead-letter policy)
@@ -13,6 +13,10 @@
 9. Policy simulation sandbox for approval/risk changes
 
 ## Completed Recently
+- **WEBHOOK-HARDEN-5** - Automated evidence upload + incident alert routing baseline
+  - Evidence manifest generator from captured snapshots
+  - Incident alert routing manifest generator (channel/target/severity)
+  - Unified evidence-alert pipeline + tests
 - **BROKER-VALID-4** - Validation mode drift monitor + hard-fail auto-revert baseline
   - Added report-only expiry controls with fail-safe revert to enforce mode
   - Added rollout metadata in validation warning/block responses
