@@ -96,6 +96,17 @@ Comms observability:
 - replay dead letters manually:
   - `python apps/orchestrator/agent_cli_dlq_replay.py --limit 10`
 
+Governance policy simulation sandbox:
+```bash
+python apps/backtester/policy_simulation.py \
+  --confidence 0.93 \
+  --symbol SPY \
+  --allowed-symbols SPY,QQQ \
+  --allowed-tiers tier-1,tier-2 \
+  --current-kpi-json '{"approval_rate":0.42,"signals_rejected":14,"equity_pnl_total":3}' \
+  --baseline-kpi-json '{"approval_rate":0.55,"signals_rejected":8,"equity_pnl_total":7}'
+```
+
 Manual CLI bridge invocation example:
 ```bash
 python apps/orchestrator/agent_cli_bridge.py \
