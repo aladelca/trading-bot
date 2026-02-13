@@ -55,7 +55,23 @@ Current adapter now supports:
 - Executions + activities: historical account events
 - Quotes: real-time quote pulls from symbol IDs
 - Candles: time-series candles by interval
-- Orders: validated submit path with retry/idempotency
+- Orders: validated submit path with retry/idempotency (partner mode only)
+
+Retail-safe account mode (default):
+- `QUESTRADE_ACCOUNT_MODE=retail_read_only` blocks live API order submission.
+- `QUESTRADE_ACCOUNT_MODE=partner_trading` enables live submit path.
+
+Generate manual trade ticket for retail execution in Questrade UI:
+```bash
+python apps/backtester/trade_ticket.py \
+  --symbol XEQT \
+  --side buy \
+  --quantity 5 \
+  --order-type limit \
+  --extended-hours \
+  --strategy-id swing-v1 \
+  --rationale "pullback entry near support"
+```
 
 Fetch a strategy-ready broker snapshot (balances + positions + quotes):
 ```bash

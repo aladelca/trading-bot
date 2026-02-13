@@ -13,6 +13,10 @@
 9. Policy simulation sandbox for approval/risk changes
 
 ## Completed Recently
+- **BROKER-ACCESS-1** - Questrade retail read-only mode + manual trade ticket baseline
+  - Added retail-safe execution block for live order submit path by default
+  - Added account mode control (`QUESTRADE_ACCOUNT_MODE`)
+  - Added manual trade ticket artifact builder + CLI + tests
 - **TBOT-A20** - Governance reconciliation review cadence + stale decision cleanup baseline
   - Reconciliation evaluator for policy review cadence compliance
   - Stale pending decision detection with cleanup-plan artifacts
