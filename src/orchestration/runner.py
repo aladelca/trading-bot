@@ -32,7 +32,7 @@ def run_once(settings: AppSettings, policy: RiskPolicy, audit: AuditLogger) -> l
 
     fills: list[dict] = []
 
-    for event in fetch_free_news_events():
+    for event in fetch_free_news_events(symbols=settings.runtime.symbols):
         signal = generate_signal_from_news_event(event)
         if not signal:
             continue
