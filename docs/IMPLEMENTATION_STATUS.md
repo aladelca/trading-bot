@@ -47,6 +47,7 @@ Updated: 2026-02-13
 - ✅ Governance recommendation audit/versioning ledger baseline (versioned governance decisions in audit DB)
 - ✅ Governance deployment sign-off baseline (checklist + mandatory gate evaluator)
 - ✅ Governance drift acknowledgement baseline (ack payload + expiry evaluator + cli)
+- ✅ Governance emergency override baseline (override artifact + expiry enforcement + cli)
 - ✅ Governance threshold tuning baseline from paper KPI metrics (recommended min confidence + allowed tiers)
 
 ## Partially Implemented
