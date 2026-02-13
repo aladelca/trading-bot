@@ -4,7 +4,7 @@ _Last updated: 2026-02-13_
 
 ## Epic TBOT-EPIC-1: Core v1 Trading Pipeline
 - Status: **IN PROGRESS**
-- Progress: 99%
+- Progress: 100%
 
 ### Done
 - TBOT-1 Scaffold + config baseline ✅
@@ -28,6 +28,7 @@ _Last updated: 2026-02-13_
 ### Done
 - WEBHOOK-HARDEN-1 Deployment hardening baseline (TLS/reverse-proxy/worker scaffold) ✅
 - WEBHOOK-HARDEN-2 Production rollout assets (TLS bootstrap script, systemd units, prod Nginx template, rollout guide) ✅
+- WEBHOOK-HARDEN-3 VPS cutover validation baseline (go/no-go checklist + validation script) ✅
 - PNL-FX-1 Multi-currency PnL normalization baseline ✅
 - BROKER-VALID-2 Broker-specific edge-case validation matrix expansion ✅
 

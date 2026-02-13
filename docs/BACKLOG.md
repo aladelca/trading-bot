@@ -1,10 +1,10 @@
 # Product Backlog (Prioritized)
 
 ## P1 (High)
-1. **WEBHOOK-HARDEN-3** - VPS execution and DNS/webhook cutover validation
-2. **TBOT-A13** - Scheduled governance calibration delivery (cron + channel routing)
-3. **TBOT-A14** - Governance recommendation approval workflow (human accept/reject/change-set)
-4. **BROKER-VALID-3** - Broker validation matrix rollout toggles + broker-side rejection telemetry
+1. **TBOT-A13** - Scheduled governance calibration delivery (cron + channel routing)
+2. **TBOT-A14** - Governance recommendation approval workflow (human accept/reject/change-set)
+3. **BROKER-VALID-3** - Broker validation matrix rollout toggles + broker-side rejection telemetry
+4. **WEBHOOK-HARDEN-4** - Host execution evidence capture + post-cutover incident playbook automation
 
 ## P2 (Medium)
 6. **TBOT-A8** - Agent communication observability (delivery audit + retry/dead-letter policy)
@@ -13,6 +13,10 @@
 9. Policy simulation sandbox for approval/risk changes
 
 ## Completed Recently
+- **WEBHOOK-HARDEN-3** - VPS cutover validation baseline
+  - Host-side cutover validation script (`scripts/deploy/validate_webhook_cutover.sh`)
+  - Go/no-go acceptance checklist (`docs/webhook-cutover-checklist.md`)
+  - Runbook/deployment integration for cutover gating
 - **BROKER-VALID-2** - Broker-specific edge-case matrix expansion baseline
   - Added side/symbol sanitation and hard quantity caps
   - Added Questrade extended-hours edge rules with explicit block reasons

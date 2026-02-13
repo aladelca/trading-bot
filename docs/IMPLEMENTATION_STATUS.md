@@ -21,6 +21,7 @@ Updated: 2026-02-13
 - ✅ Telegram webhook baseline with idempotent callback persistence (`apps/telegram_webhook/server.py`, `src/webhook/*`)
 - ✅ Webhook server/worker queue hardening baseline (health endpoint, payload size guard, retry/fail states)
 - ✅ Webhook production rollout assets (prod Nginx TLS template, systemd units, TLS bootstrap + healthcheck scripts, deployment checklist)
+- ✅ Webhook VPS cutover validation baseline (go/no-go checklist + host validation script)
 - ✅ Broker hardening baseline (error taxonomy + retry/backoff + idempotency key propagation)
 - ✅ Broker validation edge-matrix baseline v2 (symbol/side hygiene + quantity caps + Questrade extended-hours constraints)
 - ✅ Advanced PnL baseline (realized/unrealized + avg cost + snapshot persistence)
