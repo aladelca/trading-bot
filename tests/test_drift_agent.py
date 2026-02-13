@@ -1,4 +1,4 @@
-from src.agents.drift import detect_metric_drift, rollback_recommendation
+from src.agents.drift import detect_metric_drift, drift_severity, rollback_recommendation
 
 
 def test_drift_detection_and_rollback():
@@ -6,5 +6,7 @@ def test_drift_detection_and_rollback():
     base = {"approval_rate": 0.6, "equity_pnl_total": 10, "signals_rejected": 10}
     alerts = detect_metric_drift(curr, base)
     assert len(alerts) >= 2
+    sev = drift_severity(alerts)
+    assert sev in {"medium", "high"}
     rb = rollback_recommendation(alerts)
     assert "rollback" in rb.lower()

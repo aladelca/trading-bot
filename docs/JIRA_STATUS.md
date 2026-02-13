@@ -31,12 +31,13 @@ _Last updated: 2026-02-13_
 
 ## Epic TBOT-EPIC-2: Agentic Autonomy with Governance
 - Status: **IN PROGRESS**
-- Progress: 55%
+- Progress: 85%
 
 ### Done
 - TBOT-A1 Multi-agent contracts and supervisor skeleton ✅
+- TBOT-A2 Learning/review agent reports ✅
+- TBOT-A3 Controlled auto-approve policy escalation matrix ✅
+- TBOT-A4 Drift detection and rollback recommendations ✅
 
-### In Progress
-- TBOT-A2 Learning/review agent reports 🔄
-- TBOT-A3 Controlled auto-approve policy escalation matrix 🔄
-- TBOT-A4 Drift detection and rollback recommendations 🔄
+### To Do
+- TBOT-A5 Governance threshold tuning using 2-4 week paper metrics

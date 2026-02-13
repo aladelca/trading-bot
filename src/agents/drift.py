@@ -22,9 +22,22 @@ def detect_metric_drift(current: dict, baseline: dict) -> list[str]:
     return alerts
 
 
-def rollback_recommendation(alerts: list[str]) -> str:
+def drift_severity(alerts: list[str]) -> str:
     if not alerts:
+        return "none"
+    if len(alerts) == 1:
+        return "low"
+    if len(alerts) == 2:
+        return "medium"
+    return "high"
+
+
+def rollback_recommendation(alerts: list[str]) -> str:
+    severity = drift_severity(alerts)
+    if severity == "none":
         return "No rollback needed. Continue monitoring."
-    if len(alerts) >= 2:
+    if severity == "low":
+        return "Recommend cautious rollback review and temporary risk reduction."
+    if severity == "medium":
         return "Recommend rollback to last known stable config and keep paper-mode active."
-    return "Recommend cautious rollback review and temporary risk reduction."
+    return "Immediate rollback recommended; disable live mode and enforce manual approvals only."

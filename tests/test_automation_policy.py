@@ -11,3 +11,8 @@ def test_choose_auto_approve_tier():
 def test_tier_allows_auto_approve():
     assert tier_allows_auto_approve("tier-1", "SPY", {"SPY", "QQQ"}) is True
     assert tier_allows_auto_approve("manual", "SPY", {"SPY"}) is False
+
+
+def test_tier_allows_auto_approve_respects_allowed_tiers():
+    assert tier_allows_auto_approve("tier-3", "SPY", {"SPY"}, allowed_tiers={"tier-1", "tier-2"}) is False
+    assert tier_allows_auto_approve("tier-2", "SPY", {"SPY"}, allowed_tiers={"tier-1", "tier-2"}) is True
