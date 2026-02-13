@@ -1,0 +1,7 @@
+symbols:
+  - SPY
+  - QQQ
+asset_types:
+  - ETF
+  - STOCK
+allow_extended_hours: true

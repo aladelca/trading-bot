@@ -1,3 +1,50 @@
 # trading-bot
 
-Initial repository scaffold.
+Human-in-the-loop scaffold for a news-driven **stocks/ETF** trading bot (Questrade-first), with Telegram approval before execution.
+
+## Current status
+- ✅ v1 scaffold only (paper mode default)
+- ✅ Risk gates + sizing
+- ✅ Signal placeholder from free news feed interface
+- ✅ Telegram approval gate placeholder
+- ✅ Questrade adapter stub (credentials pending)
+- ❌ No live trading enabled yet
+
+## Why extended hours can help
+- Capture post-earnings and macro reactions earlier.
+- Potentially improve entry timing around overnight news.
+
+## Extended-hours risks (important)
+- Wider spreads and thinner liquidity.
+- More slippage and false breakouts.
+- Harder fills for larger position sizes.
+
+## Free data/news options (start here)
+- RSS/news feeds (issuer press releases, market news RSS)
+- Yahoo Finance public headlines (scraped carefully, terms-aware)
+- SEC company filings feed (for U.S.-listed assets)
+- Stooq/Alpha Vantage free tiers for supplemental market data
+
+## Grok API
+Yes, you can use Grok API if you have access and key provisioning. Add an adapter under `src/signals/` for sentiment/event scoring while keeping risk rules deterministic.
+
+## Setup (Python 3.11)
+```bash
+python3.11 -m venv .venv
+source .venv/bin/activate
+pip install -e .[dev]
+cp .env.example .env
+pytest -q
+python apps/orchestrator/main.py
+```
+
+## Credentials to add later
+Update `.env`:
+- `QUESTRADE_CLIENT_ID`
+- `QUESTRADE_REFRESH_TOKEN`
+- `TELEGRAM_BOT_TOKEN`
+- `TELEGRAM_CHAT_ID`
+
+## Safety
+- Keep `PAPER_MODE=true` until you validate performance and reliability.
+- Keep approval gate mandatory in early live phases.

@@ -1,0 +1,6 @@
+risk_per_trade: 0.005
+max_trades_per_day: 4
+max_open_positions: 2
+daily_max_drawdown: 0.02
+weekly_max_drawdown: 0.05
+allow_martingale: false
