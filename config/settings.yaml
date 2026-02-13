@@ -1,0 +1,9 @@
+paper_mode: true
+timezone: America/Toronto
+broker: questrade
+approval:
+  provider: telegram
+  expiry_seconds: 300
+strategy:
+  name: event_momentum_v1
+  min_signal_score: 0.65
