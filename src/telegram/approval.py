@@ -9,7 +9,7 @@ from src.telegram.client import TelegramClient, TelegramConfig
 
 
 class ApprovalGate:
-    """Approval gate with Telegram integration fallback."""
+    """Approval gate with Telegram integration fallback + optional controlled automation."""
 
     def __init__(self, required: bool = True, timeout_seconds: int = 20):
         self.required = required
@@ -19,11 +19,32 @@ class ApprovalGate:
         chat_id = os.getenv("TELEGRAM_CHAT_ID", "")
         self.client = TelegramClient(TelegramConfig(token, chat_id), timeout_seconds) if token and chat_id else None
 
+    def _policy_auto_approve(self, signal: TradeSignal, request_id: str) -> tuple[bool, str, str] | None:
+        enabled = os.getenv("AUTO_APPROVE_ENABLED", "false").lower() in {"1", "true", "yes", "on"}
+        if not enabled:
+            return None
+
+        min_conf = float(os.getenv("AUTO_APPROVE_MIN_CONFIDENCE", "0.0"))
+        symbols_raw = os.getenv("AUTO_APPROVE_SYMBOLS", "")
+        symbols = {s.strip().upper() for s in symbols_raw.split(",") if s.strip()}
+
+        if signal.confidence < min_conf:
+            return None
+        if symbols and signal.symbol.upper() not in symbols:
+            return None
+
+        return True, "policy-auto", request_id
+
     def request_with_meta(self, signal: TradeSignal) -> tuple[bool, str, str]:
         if not self.required:
             return True, "bypass", ""
 
         request_id = uuid4().hex[:10]
+
+        policy_decision = self._policy_auto_approve(signal, request_id)
+        if policy_decision is not None:
+            return policy_decision
+
         payload = asdict(signal)
 
         if not self.client:
