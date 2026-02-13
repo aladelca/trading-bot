@@ -1,10 +1,10 @@
 # Product Backlog (Prioritized)
 
 ## P1 (High)
-1. **WEBHOOK-HARDEN-6** - Alert delivery connector + retry policy for routing manifests
-2. **TBOT-A19** - Governance emergency override protocol + expiry enforcement
-3. **TBOT-A20** - Governance policy reconciliation review cadence + stale decision cleanup
-4. **BROKER-VALID-6** - Broker validation anomaly triage playbook + remediation matrix
+1. **TBOT-A19** - Governance emergency override protocol + expiry enforcement
+2. **TBOT-A20** - Governance policy reconciliation review cadence + stale decision cleanup
+3. **BROKER-VALID-6** - Broker validation anomaly triage playbook + remediation matrix
+4. **WEBHOOK-HARDEN-7** - Delivery connector integration to provider + signed delivery receipts
 
 ## P2 (Medium)
 6. **TBOT-A8** - Agent communication observability (delivery audit + retry/dead-letter policy)
@@ -13,6 +13,10 @@
 9. Policy simulation sandbox for approval/risk changes
 
 ## Completed Recently
+- **WEBHOOK-HARDEN-6** - Alert delivery connector + retry policy baseline
+  - Delivery connector for incident alert manifests
+  - Retry + dead-letter handling for exhausted attempts
+  - CLI runner + tests for sent/dead-letter outcomes
 - **BROKER-VALID-5** - Validation rollout metrics dashboard + alert thresholds baseline
   - Metrics aggregator for pre-trade blocks, warnings, broker errors, auto-reverts
   - Threshold alert evaluator and dashboard CLI

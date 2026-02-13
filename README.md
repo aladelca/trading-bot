@@ -217,6 +217,13 @@ Generate evidence + alert routing manifests:
 ```bash
 python apps/telegram_webhook/evidence_alert_pipeline.py
 ```
+Deliver pending alert manifests with retry policy:
+```bash
+python apps/telegram_webhook/alert_delivery_runner.py \
+  --delivery-dir apps/telegram_webhook/reports/delivery \
+  --max-attempts 3 \
+  --backoff-seconds 0.2
+```
 
 ## Plan tracking
 - Implementation status vs plan: `docs/IMPLEMENTATION_STATUS.md`
