@@ -2,8 +2,8 @@
 
 ## P1 (High)
 1. **TBOT-A5** - Governance threshold tuning from live paper metrics
-2. **WEBHOOK-HARDEN-2** - Production webhook rollout finalization (real cert provisioning + domain + supervised host process)
-3. **BROKER-VALID-2** - Broker-specific edge-case matrix expansion
+2. **BROKER-VALID-2** - Broker-specific edge-case matrix expansion
+3. **WEBHOOK-HARDEN-3** - VPS execution and DNS/webhook cutover validation
 
 ## P2 (Medium)
 4. Multi-currency PnL live FX feed + cross-rate validation
@@ -11,6 +11,11 @@
 6. Policy simulation sandbox for approval/risk changes
 
 ## Completed Recently
+- **WEBHOOK-HARDEN-2** - Production rollout assets
+  - Nginx production TLS template
+  - systemd service units for server + worker
+  - TLS bootstrap and webhook healthcheck scripts
+  - host rollout checklist in deployment guide
 - **TBOT-A2/A3/A4** - Governance hardening baseline
   - Structured learning recommendations
   - Tier-aware auto-approve escalation controls

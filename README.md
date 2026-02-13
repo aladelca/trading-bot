@@ -100,6 +100,10 @@ Health check:
 For deployment scaffold, see:
 - `infra/docker/docker-compose.webhook.yml`
 - `infra/nginx/telegram_webhook.conf`
+- `infra/nginx/telegram_webhook.prod.conf`
+- `infra/systemd/tradingbot-webhook-server.service`
+- `infra/systemd/tradingbot-webhook-worker.service`
+- `docs/deployment-webhook-hardening.md`
 
 ## Plan tracking
 - Implementation status vs plan: `docs/IMPLEMENTATION_STATUS.md`
