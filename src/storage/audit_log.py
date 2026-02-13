@@ -23,6 +23,16 @@ class AuditLogger:
             )
             """
         )
+        self.conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS decisions (
+                request_id TEXT PRIMARY KEY,
+                approved INTEGER NOT NULL,
+                source TEXT NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+            """
+        )
         self.conn.commit()
 
     def log(self, kind: str, payload: dict) -> None:
@@ -31,6 +41,26 @@ class AuditLogger:
             (kind, json.dumps(payload, sort_keys=True)),
         )
         self.conn.commit()
+
+    def save_decision(self, request_id: str, approved: bool, source: str) -> None:
+        self.conn.execute(
+            """
+            INSERT INTO decisions(request_id, approved, source)
+            VALUES (?, ?, ?)
+            ON CONFLICT(request_id) DO UPDATE SET approved=excluded.approved, source=excluded.source
+            """,
+            (request_id, int(approved), source),
+        )
+        self.conn.commit()
+
+    def get_decision(self, request_id: str) -> bool | None:
+        row = self.conn.execute(
+            "SELECT approved FROM decisions WHERE request_id=?",
+            (request_id,),
+        ).fetchone()
+        if row is None:
+            return None
+        return bool(row[0])
 
     def count(self, kind: str | None = None) -> int:
         if kind:

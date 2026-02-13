@@ -50,3 +50,6 @@ Update `.env`:
 ## Safety
 - Keep `PAPER_MODE=true` until you validate performance and reliability.
 - Keep approval gate mandatory in early live phases.
+- Live execution is blocked unless BOTH are explicitly set:
+  - `LIVE_TRADING_ENABLED=true`
+  - `LIVE_TRADING_CONFIRM=I_UNDERSTAND_LIVE_TRADING_RISK`
