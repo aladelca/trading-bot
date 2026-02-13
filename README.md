@@ -114,6 +114,11 @@ python apps/backtester/threshold_calibration.py \
   --candidates 0.85,0.88,0.90,0.92,0.95
 ```
 
+Weekly governance calibration report artifact:
+```bash
+python apps/backtester/weekly_governance_calibration.py
+```
+
 Manual CLI bridge invocation example:
 ```bash
 python apps/orchestrator/agent_cli_bridge.py \
