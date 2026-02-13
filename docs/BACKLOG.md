@@ -1,10 +1,10 @@
 # Product Backlog (Prioritized)
 
 ## P1 (High)
-1. **WEBHOOK-HARDEN-4** - Host execution evidence capture + post-cutover incident playbook automation
-2. **TBOT-A15** - Governance recommendation application guardrails + rollback template
-3. **TBOT-A16** - Governance recommendation audit and versioning ledger
-4. **BROKER-VALID-4** - Validation mode drift monitoring + hard-fail auto-revert policy
+1. **TBOT-A15** - Governance recommendation application guardrails + rollback template
+2. **TBOT-A16** - Governance recommendation audit and versioning ledger
+3. **BROKER-VALID-4** - Validation mode drift monitoring + hard-fail auto-revert policy
+4. **WEBHOOK-HARDEN-5** - Automated evidence upload + incident alert routing
 
 ## P2 (Medium)
 6. **TBOT-A8** - Agent communication observability (delivery audit + retry/dead-letter policy)
@@ -13,6 +13,10 @@
 9. Policy simulation sandbox for approval/risk changes
 
 ## Completed Recently
+- **WEBHOOK-HARDEN-4** - Host evidence + incident automation baseline
+  - Evidence capture script (`scripts/deploy/capture_webhook_evidence.sh`)
+  - Incident report generator (`apps/telegram_webhook/incident_report.py`)
+  - Cutover checklist acceptance criteria updated with evidence + incident outputs
 - **BROKER-VALID-3** - Validation rollout toggles + rejection telemetry baseline
   - Added `BROKER_VALIDATION_MODE` (`enforce|report_only`)
   - Added pre-trade rejection source metadata

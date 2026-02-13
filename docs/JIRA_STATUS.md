@@ -29,6 +29,7 @@ _Last updated: 2026-02-13_
 - WEBHOOK-HARDEN-1 Deployment hardening baseline (TLS/reverse-proxy/worker scaffold) ✅
 - WEBHOOK-HARDEN-2 Production rollout assets (TLS bootstrap script, systemd units, prod Nginx template, rollout guide) ✅
 - WEBHOOK-HARDEN-3 VPS cutover validation baseline (go/no-go checklist + validation script) ✅
+- WEBHOOK-HARDEN-4 Host evidence capture + post-cutover incident automation baseline ✅
 - PNL-FX-1 Multi-currency PnL normalization baseline ✅
 - BROKER-VALID-2 Broker-specific edge-case validation matrix expansion ✅
 - BROKER-VALID-3 Validation rollout toggles + broker rejection telemetry baseline ✅

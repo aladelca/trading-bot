@@ -176,6 +176,8 @@ For deployment scaffold, see:
 - `docs/deployment-webhook-hardening.md`
 - `docs/webhook-cutover-checklist.md`
 - `scripts/deploy/validate_webhook_cutover.sh`
+- `scripts/deploy/capture_webhook_evidence.sh`
+- `apps/telegram_webhook/incident_report.py`
 
 ## Plan tracking
 - Implementation status vs plan: `docs/IMPLEMENTATION_STATUS.md`

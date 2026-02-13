@@ -50,6 +50,8 @@
   - install systemd services from `infra/systemd/`
   - run `bash scripts/deploy/healthcheck_webhook.sh`
   - run `bash scripts/deploy/validate_webhook_cutover.sh`
+  - run `bash scripts/deploy/capture_webhook_evidence.sh`
+  - run `python apps/telegram_webhook/incident_report.py`
   - complete `docs/webhook-cutover-checklist.md`
 
 ## 5) Rollback drill
