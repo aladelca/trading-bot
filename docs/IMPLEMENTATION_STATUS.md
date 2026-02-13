@@ -24,8 +24,8 @@ Updated: 2026-02-13
 
 ## Not Yet Implemented
 - ⬜ Production webhook service for Telegram callbacks (currently polling-based).
-- ⬜ Full micro-live operations playbook (runbooks/weekly postmortem templates).
-- ⬜ Automated controlled-automation policy (Phase D auto-approve subset rules).
+- ⬜ Full micro-live weekly postmortem template automation (basic runbook now exists in docs/runbooks.md).
+- ⬜ Advanced controlled-automation policy orchestration (basic env-driven auto-approve rules now implemented).
 
 ## Recommendation to reach “v1 operational”
 1. Implement symbolId lookup + validated order mapping per asset.
