@@ -107,6 +107,13 @@ python apps/backtester/policy_simulation.py \
   --baseline-kpi-json '{"approval_rate":0.55,"signals_rejected":8,"equity_pnl_total":7}'
 ```
 
+Governance threshold calibration from replay pack:
+```bash
+python apps/backtester/threshold_calibration.py \
+  --replay-pack data/replay_packs/governance-sample.json \
+  --candidates 0.85,0.88,0.90,0.92,0.95
+```
+
 Manual CLI bridge invocation example:
 ```bash
 python apps/orchestrator/agent_cli_bridge.py \
