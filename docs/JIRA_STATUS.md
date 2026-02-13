@@ -35,6 +35,7 @@ _Last updated: 2026-02-13_
 - BROKER-VALID-2 Broker-specific edge-case validation matrix expansion ✅
 - BROKER-VALID-3 Validation rollout toggles + broker rejection telemetry baseline ✅
 - BROKER-VALID-4 Validation mode drift monitoring + hard-fail auto-revert policy ✅
+- BROKER-VALID-5 Validation rollout metrics dashboard + alert thresholds ✅
 
 ## Epic TBOT-EPIC-2: Agentic Autonomy with Governance
 - Status: **IN PROGRESS**

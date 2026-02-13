@@ -250,3 +250,9 @@ Rollout toggle:
 - `BROKER_VALIDATION_AUTO_REVERT=true` (force fail-safe revert to enforce)
 - `BROKER_VALIDATION_REPORT_ONLY_SINCE_UTC=<ISO-8601 UTC>`
 - `BROKER_VALIDATION_REPORT_ONLY_MAX_MINUTES=<int>`
+
+Validation rollout metrics dashboard:
+```bash
+python apps/backtester/broker_validation_dashboard.py \
+  --records-json '[{"status":"blocked","rejection_source":"pre_trade_validation"},{"status":"error","rejection_source":"broker_api"}]'
+```
