@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import os
 from dataclasses import asdict
-from hashlib import sha1
+from uuid import uuid4
 
 from src.signals.models import TradeSignal
 from src.telegram.client import TelegramClient, TelegramConfig
@@ -27,7 +27,7 @@ class ApprovalGate:
         if not self.required:
             return True
 
-        request_id = sha1(f"{signal.symbol}:{signal.side}:{signal.entry}".encode()).hexdigest()[:10]
+        request_id = uuid4().hex[:10]
         payload = asdict(signal)
 
         if not self.client:
