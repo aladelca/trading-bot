@@ -3,6 +3,7 @@ from __future__ import annotations
 import os
 from uuid import uuid4
 
+from src.agents.comms import AgentSessionBridge
 from src.agents.contracts import StageEnvelope, blocked, error, ok
 from src.broker.base import OrderRequest
 from src.broker.questrade.client import QuestradeClient
@@ -34,6 +35,14 @@ class SupervisorAgent:
             practice=os.getenv("QUESTRADE_PRACTICE", "true").lower() in {"1", "true", "yes", "on"},
         )
         self.router = ExecutionRouter(self.broker)
+        self.bridge = AgentSessionBridge(
+            allowed_routes={
+                ("market-intel", "signal"),
+                ("signal", "risk"),
+                ("risk", "approval"),
+                ("approval", "execution"),
+            }
+        )
 
     def run_one_cycle(self) -> list[StageEnvelope]:
         request_id = uuid4().hex[:12]
@@ -52,7 +61,17 @@ class SupervisorAgent:
         if signal is None:
             out.append(blocked(request_id, "signal", "signal_threshold", {"event": event}))
             return out
-        out.append(ok(request_id, "signal", {"signal": signal.__dict__}))
+        out.append(ok(request_id, "signal", {"signal": signal.__dict__}, source_agent="market-intel", target_agent="signal"))
+
+        handoff = self.bridge.send(
+            request_id=request_id,
+            source_agent="signal",
+            target_agent="risk",
+            payload={"symbol": signal.symbol, "confidence": signal.confidence},
+        )
+        out.append(handoff)
+        if handoff.status != "ok":
+            return out
 
         try:
             enforce_hard_limits(self.state, self.policy)

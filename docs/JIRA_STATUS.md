@@ -40,8 +40,12 @@ _Last updated: 2026-02-13_
 - TBOT-A3 Controlled auto-approve policy escalation matrix ✅
 - TBOT-A4 Drift detection and rollback recommendations ✅
 
+### In Progress
+- TBOT-A7 Agent communication bridge implementation (auth allow-list + routing) 🔄
+
 ### To Do
 - TBOT-A5 Governance threshold tuning using 2-4 week paper metrics
-- TBOT-A6 Agent communication bridge design (CLI/session protocol + envelope contract)
-- TBOT-A7 Agent communication bridge implementation (auth allow-list + routing)
 - TBOT-A8 Agent communication observability (delivery audit + retry/dead-letter policy)
+
+### Done
+- TBOT-A6 Agent communication bridge design (CLI/session protocol + envelope contract) ✅

@@ -26,6 +26,7 @@ Updated: 2026-02-13
 - ✅ Multi-currency PnL normalization baseline (base-currency conversion with FX map)
 - ✅ Weekly postmortem automation baseline (`apps/backtester/weekly_postmortem.py`)
 - ✅ Governance baselines: structured learning recommendations + drift detection severity + rollback guidance + tier escalation controls
+- ✅ Agent communication design baseline (envelope contract + bridge route policy scaffold)
 
 ## Partially Implemented
 - 🟡 Questrade live order path: symbolId + retry/idempotency + baseline order/session validation matrix implemented; SLA tuning and broker-specific edge-case matrix remain.
