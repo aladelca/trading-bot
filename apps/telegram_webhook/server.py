@@ -12,6 +12,7 @@ WEBHOOK_HOST = os.getenv("WEBHOOK_HOST", "0.0.0.0")
 WEBHOOK_PORT = int(os.getenv("WEBHOOK_PORT", "8080"))
 WEBHOOK_PATH = os.getenv("WEBHOOK_PATH", "/telegram/webhook")
 WEBHOOK_DB_PATH = os.getenv("WEBHOOK_DB_PATH", "data/webhook.db")
+WEBHOOK_MAX_BODY_BYTES = int(os.getenv("WEBHOOK_MAX_BODY_BYTES", "65536"))
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -25,6 +26,12 @@ class Handler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(data)
 
+    def do_GET(self):  # noqa: N802
+        if self.path == "/health":
+            self._json(200, {"status": "ok", "service": "telegram-webhook"})
+            return
+        self._json(404, {"error": "not_found"})
+
     def do_POST(self):  # noqa: N802
         if self.path != WEBHOOK_PATH:
             self._json(404, {"error": "not_found"})
@@ -37,6 +44,10 @@ class Handler(BaseHTTPRequestHandler):
 
         try:
             content_len = int(self.headers.get("Content-Length", "0"))
+            if content_len <= 0 or content_len > WEBHOOK_MAX_BODY_BYTES:
+                self._json(413, {"error": "payload_too_large_or_empty"})
+                return
+
             body = self.rfile.read(content_len)
             update = json.loads(body.decode() or "{}")
             result = enqueue_telegram_update(update, self.store)

@@ -19,6 +19,7 @@ Updated: 2026-02-13
 - ✅ End-to-end run path tests and integration checks
 - ✅ Agentic contracts + supervisor skeleton (`src/agents/*`)
 - ✅ Telegram webhook baseline with idempotent callback persistence (`apps/telegram_webhook/server.py`, `src/webhook/*`)
+- ✅ Webhook server/worker queue hardening baseline (health endpoint, payload size guard, retry/fail states)
 - ✅ Broker hardening baseline (error taxonomy + retry/backoff + idempotency key propagation)
 - ✅ Advanced PnL baseline (realized/unrealized + avg cost + snapshot persistence)
 - ✅ Weekly postmortem automation baseline (`apps/backtester/weekly_postmortem.py`)

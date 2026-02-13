@@ -88,7 +88,10 @@ Run worker for async callback processing queue:
 ```bash
 python apps/telegram_webhook/worker.py
 ```
-Set env vars: `TELEGRAM_WEBHOOK_SECRET`, `WEBHOOK_HOST`, `WEBHOOK_PORT`, `WEBHOOK_PATH`, `WEBHOOK_DB_PATH`, `WEBHOOK_WORKER_POLL_SECONDS`, `WEBHOOK_WORKER_BATCH_SIZE`.
+Set env vars: `TELEGRAM_WEBHOOK_SECRET`, `WEBHOOK_HOST`, `WEBHOOK_PORT`, `WEBHOOK_PATH`, `WEBHOOK_DB_PATH`, `WEBHOOK_MAX_BODY_BYTES`, `WEBHOOK_WORKER_POLL_SECONDS`, `WEBHOOK_WORKER_BATCH_SIZE`.
+
+Health check:
+- `GET /health` returns webhook service status.
 
 For deployment scaffold, see:
 - `infra/docker/docker-compose.webhook.yml`
