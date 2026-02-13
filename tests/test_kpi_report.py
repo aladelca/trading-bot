@@ -17,3 +17,6 @@ def test_kpi_report_counts(tmp_path):
     assert report["fills_total"] == 1
     assert report["signals_rejected"] == 1
     assert report["ledger_trades_total"] == 0
+    assert report["realized_pnl_total"] == 0.0
+    assert report["unrealized_pnl_total"] == 0.0
+    assert report["equity_pnl_total"] == 0.0

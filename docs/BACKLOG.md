@@ -1,13 +1,7 @@
 # Product Backlog (Prioritized)
 
-## P0 (Critical)
-1. **TBOT-14** - Advanced PnL engine
-   - Acceptance:
-     - Realized and unrealized PnL by symbol
-     - Position avg cost + mark-to-market snapshots
-
 ## P1 (High)
-3. **TBOT-11** - Agentic supervisor pipeline completion
+1. **TBOT-11** - Agentic supervisor pipeline completion
    - Acceptance:
      - Stage contracts enforced
      - Circuit-breaker integration
@@ -22,6 +16,10 @@
 7. **TBOT-A4** - Drift detection and rollback policy
 
 ## Completed Recently
+- **TBOT-14** - Advanced PnL engine baseline
+  - Realized/unrealized PnL by symbol
+  - Avg cost and mark-to-market calculations
+  - PnL snapshot persistence
 - **TBOT-13** - Broker hardening matrix baseline
   - Retryable/fatal/blocked taxonomy
   - Bounded retry with backoff

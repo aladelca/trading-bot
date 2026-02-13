@@ -23,8 +23,8 @@ _Last updated: 2026-02-13_
 - TBOT-12 Telegram production webhook + idempotent callback store ✅
 - TBOT-13 Broker retry matrix and error taxonomy hardening ✅
 
-### To Do
-- TBOT-14 Advanced realized/unrealized PnL engine
+### Done
+- TBOT-14 Advanced realized/unrealized PnL engine ✅
 - TBOT-14 Advanced realized/unrealized PnL engine
 - TBOT-15 Weekly postmortem automation
 

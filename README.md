@@ -61,6 +61,12 @@ After running orchestrator cycles, generate KPI summary from audit DB:
 python apps/backtester/report.py
 ```
 
+## Advanced PnL report
+Generate realized/unrealized PnL and save a snapshot:
+```bash
+python apps/backtester/pnl_report.py
+```
+
 ## Agentic supervisor cycle
 Run the new supervised multi-agent pipeline skeleton:
 ```bash
