@@ -33,6 +33,7 @@ Updated: 2026-02-13
 - ✅ Governance policy simulation sandbox baseline (what-if approvals/risk with CLI scenario runner)
 - ✅ Governance threshold calibration baseline (replay-pack candidate ranking + calibration CLI)
 - ✅ Weekly governance calibration artifact baseline (weekly report generator with KPI snapshot + candidate ranking)
+- ✅ Governance threshold tuning baseline from paper KPI metrics (recommended min confidence + allowed tiers)
 
 ## Partially Implemented
 - 🟡 Questrade live order path: symbolId + retry/idempotency + baseline order/session validation matrix implemented; SLA tuning and broker-specific edge-case matrix remain.

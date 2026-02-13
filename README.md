@@ -119,6 +119,12 @@ Weekly governance calibration report artifact:
 python apps/backtester/weekly_governance_calibration.py
 ```
 
+Governance threshold tuning from paper KPIs:
+```bash
+python apps/backtester/threshold_tuning.py \
+  --kpi-json '{"approval_rate":0.58,"equity_pnl_total":3.4,"signals_rejected":11}'
+```
+
 Manual CLI bridge invocation example:
 ```bash
 python apps/orchestrator/agent_cli_bridge.py \

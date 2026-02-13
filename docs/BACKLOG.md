@@ -1,10 +1,10 @@
 # Product Backlog (Prioritized)
 
 ## P1 (High)
-1. **TBOT-A5** - Governance threshold tuning from live paper metrics
-2. **BROKER-VALID-2** - Broker-specific edge-case matrix expansion
-3. **WEBHOOK-HARDEN-3** - VPS execution and DNS/webhook cutover validation
-4. **TBOT-A13** - Scheduled governance calibration delivery (cron + channel routing)
+1. **BROKER-VALID-2** - Broker-specific edge-case matrix expansion
+2. **WEBHOOK-HARDEN-3** - VPS execution and DNS/webhook cutover validation
+3. **TBOT-A13** - Scheduled governance calibration delivery (cron + channel routing)
+4. **TBOT-A14** - Governance recommendation approval workflow (human accept/reject/change-set)
 
 ## P2 (Medium)
 6. **TBOT-A8** - Agent communication observability (delivery audit + retry/dead-letter policy)
@@ -13,6 +13,10 @@
 9. Policy simulation sandbox for approval/risk changes
 
 ## Completed Recently
+- **TBOT-A5** - Governance threshold tuning baseline from paper KPIs
+  - Heuristic tuning recommendations for min confidence and allowed tiers
+  - CLI runner for KPI-driven recommendation generation
+  - Unit tests for conservative/opportunistic profiles
 - **TBOT-A12** - Weekly governance calibration automation baseline
   - Weekly markdown report generator (`apps/backtester/weekly_governance_calibration.py`)
   - Includes KPI snapshot + threshold ranking artifact
