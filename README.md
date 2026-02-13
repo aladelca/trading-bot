@@ -54,3 +54,12 @@ Update `.env`:
   - `LIVE_TRADING_ENABLED=true`
   - `LIVE_TRADING_CONFIRM=I_UNDERSTAND_LIVE_TRADING_RISK`
 - Even with live enabled, keep `LIVE_ORDER_DRY_RUN=true` until final launch.
+
+## KPI report
+After running orchestrator cycles, generate KPI summary from audit DB:
+```bash
+python apps/backtester/report.py
+```
+
+## Plan tracking
+- Implementation status vs plan: `docs/IMPLEMENTATION_STATUS.md`
