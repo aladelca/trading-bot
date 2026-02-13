@@ -155,6 +155,8 @@ For deployment scaffold, see:
 - `infra/systemd/tradingbot-webhook-server.service`
 - `infra/systemd/tradingbot-webhook-worker.service`
 - `docs/deployment-webhook-hardening.md`
+- `docs/webhook-cutover-checklist.md`
+- `scripts/deploy/validate_webhook_cutover.sh`
 
 ## Plan tracking
 - Implementation status vs plan: `docs/IMPLEMENTATION_STATUS.md`
