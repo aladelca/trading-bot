@@ -5,15 +5,13 @@ import json
 import os
 
 from src.agents.comms import AgentSessionBridge
+from src.agents.dlq import replay_dead_letters
 from src.storage.audit_log import AuditLogger
 
 
 def main() -> None:
-    p = argparse.ArgumentParser(description="Agent CLI bridge runner")
-    p.add_argument("--request-id", required=True)
-    p.add_argument("--source-agent", required=True)
-    p.add_argument("--target-agent", required=True)
-    p.add_argument("--command", required=True)
+    p = argparse.ArgumentParser(description="Replay dead-letter comms events")
+    p.add_argument("--limit", type=int, default=10)
     args = p.parse_args()
 
     allowed_routes_raw = os.getenv("AGENT_ALLOWED_ROUTES", "signal:risk")
@@ -35,14 +33,8 @@ def main() -> None:
         audit=audit,
     )
 
-    env = bridge.send(
-        request_id=args.request_id,
-        source_agent=args.source_agent,
-        target_agent=args.target_agent,
-        payload={"command": args.command},
-        transport="cli",
-    )
-    print(json.dumps(env.__dict__))
+    out = replay_dead_letters(audit=audit, bridge=bridge, limit=args.limit)
+    print(json.dumps(out))
 
 
 if __name__ == "__main__":

@@ -89,6 +89,33 @@ class AuditLogger:
         )
         self.conn.commit()
 
+    def list_dead_letters(self, limit: int = 20) -> list[dict]:
+        rows = self.conn.execute(
+            """
+            SELECT id, request_id, source_agent, target_agent, transport, reason, correlation_id, payload_json
+            FROM comms_events
+            WHERE status='error' AND payload_json LIKE '%"dead_letter": true%'
+            ORDER BY id DESC
+            LIMIT ?
+            """,
+            (int(limit),),
+        ).fetchall()
+        out: list[dict] = []
+        for row in rows:
+            out.append(
+                {
+                    "id": int(row[0]),
+                    "request_id": str(row[1]),
+                    "source_agent": str(row[2]),
+                    "target_agent": str(row[3]),
+                    "transport": str(row[4]),
+                    "reason": str(row[5]),
+                    "correlation_id": str(row[6]),
+                    "payload": json.loads(row[7]),
+                }
+            )
+        return out
+
     def save_decision(self, request_id: str, approved: bool, source: str) -> None:
         self.conn.execute(
             """

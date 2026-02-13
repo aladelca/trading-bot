@@ -43,6 +43,7 @@ class SupervisorAgent:
         }
         cli_timeout = float(os.getenv("AGENT_CLI_TIMEOUT_SECONDS", "5"))
         cli_retries = int(os.getenv("AGENT_CLI_MAX_RETRIES", "1"))
+        cli_backoff = float(os.getenv("AGENT_CLI_RETRY_BACKOFF_SECONDS", "0.2"))
 
         self.bridge = AgentSessionBridge(
             allowed_routes={
@@ -55,6 +56,7 @@ class SupervisorAgent:
             cli_allowed_commands=cli_allowed,
             cli_timeout_seconds=cli_timeout,
             cli_max_retries=cli_retries,
+            cli_retry_backoff_seconds=cli_backoff,
             audit=self.audit,
         )
 
