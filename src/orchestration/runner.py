@@ -83,6 +83,7 @@ def run_once(settings: AppSettings, policy: RiskPolicy, audit: AuditLogger) -> l
                 price=signal.entry,
                 status=status,
                 mode=mode,
+                currency=os.getenv("TRADE_CURRENCY", "USD"),
             )
 
         state.trades_today += 1

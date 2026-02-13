@@ -8,9 +8,10 @@
 ## P2 (Medium)
 4. Webhook deployment finalization (real cert provisioning + domain + supervised process on host)
 5. Broker validation matrix tuning by order type/session (baseline implemented; extend for broker-specific edge cases)
-6. Multi-currency PnL normalization
+6. Multi-currency PnL normalization (baseline implemented; extend to live FX feed and cross-rate validation)
 
 ## Completed Recently
+- **PNL-FX-1** - Multi-currency PnL normalization baseline
 - **TBOT-15** - Weekly postmortem automation baseline
 - **WEBHOOK-HARDEN-1** - Deployment hardening baseline
   - Nginx reverse-proxy template

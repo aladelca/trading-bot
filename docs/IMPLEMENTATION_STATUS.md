@@ -22,6 +22,7 @@ Updated: 2026-02-13
 - ✅ Webhook server/worker queue hardening baseline (health endpoint, payload size guard, retry/fail states)
 - ✅ Broker hardening baseline (error taxonomy + retry/backoff + idempotency key propagation)
 - ✅ Advanced PnL baseline (realized/unrealized + avg cost + snapshot persistence)
+- ✅ Multi-currency PnL normalization baseline (base-currency conversion with FX map)
 - ✅ Weekly postmortem automation baseline (`apps/backtester/weekly_postmortem.py`)
 - ✅ Governance baselines: learning recommendations + drift detection + rollback guidance + escalation tiers
 
