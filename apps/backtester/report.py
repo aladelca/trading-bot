@@ -3,6 +3,8 @@ from __future__ import annotations
 import json
 import sqlite3
 
+from src.portfolio.pnl import compute_positions_and_pnl
+
 
 def _ledger_metrics(portfolio_db_path: str) -> dict:
     conn = sqlite3.connect(portfolio_db_path)
@@ -37,6 +39,7 @@ def generate_kpi_report(db_path: str = "data/audit.db", portfolio_db_path: str =
 
     approval_rate = (approved / approvals) if approvals else 0.0
     ledger = _ledger_metrics(portfolio_db_path)
+    pnl = compute_positions_and_pnl(db_path=portfolio_db_path)
 
     return {
         "events_total": len(rows),
@@ -47,6 +50,9 @@ def generate_kpi_report(db_path: str = "data/audit.db", portfolio_db_path: str =
         "signals_rejected": rejected,
         "ledger_trades_total": ledger["trades_total"],
         "ledger_notional_total": ledger["notional_total"],
+        "realized_pnl_total": pnl["realized_pnl_total"],
+        "unrealized_pnl_total": pnl["unrealized_pnl_total"],
+        "equity_pnl_total": pnl["equity_pnl_total"],
     }
 
 
