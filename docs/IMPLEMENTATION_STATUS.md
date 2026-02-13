@@ -18,13 +18,14 @@ Updated: 2026-02-13
 - ✅ KPI report utility from audit DB (`apps/backtester/report.py`)
 - ✅ End-to-end run path tests and integration checks
 - ✅ Agentic contracts + supervisor skeleton (`src/agents/*`)
+- ✅ Telegram webhook baseline with idempotent callback persistence (`apps/telegram_webhook/server.py`, `src/webhook/*`)
 
 ## Partially Implemented
 - 🟡 Questrade live order path: symbolId resolution added, but production hardening (order retry policy + broker-specific validation matrix) remains.
 - 🟡 Portfolio/monitoring metrics: lightweight ledger and notional metrics added; advanced realized/unrealized PnL not finalized.
 
 ## Not Yet Implemented
-- ⬜ Production webhook service for Telegram callbacks (currently polling-based).
+- ⬜ Production webhook deployment hardening (TLS, reverse proxy, public exposure, queue-based async workers).
 - ⬜ Full micro-live weekly postmortem template automation (basic runbook now exists in docs/runbooks.md).
 - ⬜ Advanced controlled-automation policy orchestration (basic env-driven auto-approve rules now implemented).
 
