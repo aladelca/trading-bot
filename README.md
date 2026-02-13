@@ -82,6 +82,20 @@ Run the new supervised multi-agent pipeline skeleton:
 ```bash
 python apps/orchestrator/agentic_main.py
 ```
+Optional inter-agent CLI bridge controls:
+- `AGENT_CLI_ENABLED=false`
+- `AGENT_CLI_ALLOWED_COMMANDS=python`
+- `AGENT_CLI_TIMEOUT_SECONDS=5`
+- `AGENT_ALLOWED_ROUTES=signal:risk,risk:execution`
+
+Manual CLI bridge invocation example:
+```bash
+python apps/orchestrator/agent_cli_bridge.py \
+  --request-id demo-1 \
+  --source-agent signal \
+  --target-agent risk \
+  --command "python -c \"print('hello-risk')\""
+```
 
 ## Telegram webhook mode
 Run production-style webhook receiver (with secret-token validation):
