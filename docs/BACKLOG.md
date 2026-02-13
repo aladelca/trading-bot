@@ -1,10 +1,10 @@
 # Product Backlog (Prioritized)
 
 ## P1 (High)
-1. **TBOT-A7** - Agent communication bridge implementation (routing, auth allow-list, correlation IDs)
-2. **TBOT-A5** - Governance threshold tuning from live paper metrics
-3. **BROKER-VALID-2** - Broker-specific edge-case matrix expansion
-4. **WEBHOOK-HARDEN-3** - VPS execution and DNS/webhook cutover validation
+1. **TBOT-A5** - Governance threshold tuning from live paper metrics
+2. **BROKER-VALID-2** - Broker-specific edge-case matrix expansion
+3. **WEBHOOK-HARDEN-3** - VPS execution and DNS/webhook cutover validation
+4. **TBOT-A8** - Agent communication observability (delivery audit + retry/dead-letter policy)
 
 ## P2 (Medium)
 6. **TBOT-A8** - Agent communication observability (delivery audit + retry/dead-letter policy)
@@ -13,6 +13,10 @@
 9. Policy simulation sandbox for approval/risk changes
 
 ## Completed Recently
+- **TBOT-A7** - Agent communication bridge implementation baseline
+  - Route allow-list enforcement and correlation IDs
+  - CLI transport support with explicit command allow-list and timeout
+  - Manual CLI bridge runner (`apps/orchestrator/agent_cli_bridge.py`)
 - **TBOT-A6** - Agent communication bridge design baseline
   - Extended stage envelope contract with source/target/transport/correlation
   - Defined Sprint-3 comms track and protocol expectations
