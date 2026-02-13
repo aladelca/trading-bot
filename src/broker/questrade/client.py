@@ -6,6 +6,9 @@ import requests
 
 from src.broker.base import BrokerClient, OrderRequest
 from src.broker.questrade.auth import QuestradeToken, refresh_access_token
+from src.execution.errors import classify_broker_error
+from src.execution.idempotency import build_order_idempotency_key
+from src.execution.retry import RetryPolicy, with_retry
 
 
 class QuestradeClient(BrokerClient):
@@ -94,7 +97,35 @@ class QuestradeClient(BrokerClient):
             "secondaryRoute": "AUTO",
         }
 
-    def submit_order(self, order: OrderRequest, dry_run: bool = True) -> dict:
+    def _submit_once(self, token: QuestradeToken, account_id: str, payload: dict, idem_key: str) -> dict:
+        try:
+            response = requests.post(
+                f"{token.api_server}v1/accounts/{account_id}/orders",
+                headers={**self._headers(), "X-Client-Request-Id": idem_key},
+                json=payload,
+                timeout=15,
+            )
+            if response.status_code >= 400:
+                info = classify_broker_error(response.status_code, response.text)
+                return {
+                    "status": "error",
+                    "broker": "questrade",
+                    "error_category": info.category,
+                    "reason": info.reason,
+                    "http_status": response.status_code,
+                }
+            return {"status": "submitted", "broker": "questrade", "response": response.json()}
+        except requests.RequestException as exc:
+            info = classify_broker_error(503, str(exc))
+            return {
+                "status": "error",
+                "broker": "questrade",
+                "error_category": info.category,
+                "reason": info.reason,
+                "message": str(exc),
+            }
+
+    def submit_order(self, order: OrderRequest, dry_run: bool = True, request_id: str = "") -> dict:
         if dry_run:
             return {"status": "dry-run", "broker": "questrade", **asdict(order)}
 
@@ -112,14 +143,16 @@ class QuestradeClient(BrokerClient):
 
         account_id = str(accounts[0].get("number"))
         payload = self.build_order_payload(account_id, order, symbol_id)
-        response = requests.post(
-            f"{token.api_server}v1/accounts/{account_id}/orders",
-            headers=self._headers(),
-            json=payload,
-            timeout=15,
+        idem_key = build_order_idempotency_key(order, request_id=request_id or "no-request-id")
+
+        policy = RetryPolicy(max_attempts=3, base_delay_seconds=0.2, backoff_multiplier=2.0)
+        result = with_retry(
+            lambda: self._submit_once(token, account_id, payload, idem_key),
+            should_retry=lambda r: r.get("status") == "error" and r.get("error_category") == "retryable",
+            policy=policy,
         )
-        response.raise_for_status()
-        return {"status": "submitted", "broker": "questrade", "response": response.json()}
+        result["idempotency_key"] = idem_key
+        return result
 
     def place_order(self, order: OrderRequest) -> dict:
         return {"status": "paper-simulated", "broker": "questrade", **asdict(order)}

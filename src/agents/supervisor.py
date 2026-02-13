@@ -81,7 +81,7 @@ class SupervisorAgent:
             extended_hours=self.settings.runtime.allow_extended_hours,
         )
         try:
-            fill = self.router.execute(order, paper_mode=self.settings.runtime.paper_mode)
+            fill = self.router.execute(order, paper_mode=self.settings.runtime.paper_mode, request_id=request_id)
         except Exception as exc:  # defensive boundary for stage isolation
             out.append(error(request_id, "execution", str(exc), {"order": order.__dict__}))
             return out
