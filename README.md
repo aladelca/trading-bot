@@ -47,6 +47,21 @@ Update `.env`:
 - `TELEGRAM_BOT_TOKEN`
 - `TELEGRAM_CHAT_ID`
 
+## Questrade API coverage in bot
+Current adapter now supports:
+- Accounts: list accounts
+- Balances: per-currency balances / buying power
+- Positions: open positions by account
+- Executions + activities: historical account events
+- Quotes: real-time quote pulls from symbol IDs
+- Candles: time-series candles by interval
+- Orders: validated submit path with retry/idempotency
+
+Fetch a strategy-ready broker snapshot (balances + positions + quotes):
+```bash
+python apps/backtester/questrade_snapshot.py --symbols SPY,QQQ,XEQT
+```
+
 ## Safety
 - Keep `PAPER_MODE=true` until you validate performance and reliability.
 - Keep approval gate mandatory in early live phases.

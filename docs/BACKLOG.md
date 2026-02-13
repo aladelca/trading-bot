@@ -13,6 +13,10 @@
 9. Policy simulation sandbox for approval/risk changes
 
 ## Completed Recently
+- **BROKER-API-1** - Questrade API capability expansion baseline
+  - Added wrappers for balances, positions, executions, activities, quotes, candles
+  - Added account+market snapshot helper CLI for strategy inputs
+  - Added endpoint behavior tests for expanded API surface
 - **TBOT-A19** - Governance emergency override protocol + expiry enforcement baseline
   - Emergency override artifact generator with explicit operator/severity/reason fields
   - Expiry evaluator with strict disable-on-expiry enforcement signal
