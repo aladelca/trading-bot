@@ -15,7 +15,7 @@ from src.execution.validation_rollout import resolve_validation_mode
 
 
 class QuestradeClient(BrokerClient):
-    """Questrade adapter with token refresh + account helpers."""
+    """Questrade adapter with token refresh + account/market-data helpers."""
 
     def __init__(self, client_id: str = "", refresh_token: str = "", practice: bool = True):
         self.client_id = client_id
@@ -35,29 +35,68 @@ class QuestradeClient(BrokerClient):
             return {}
         return {"Authorization": f"Bearer {token.access_token}"}
 
-    def get_accounts(self) -> list[dict]:
-        token = self.token or self.ensure_token()
-        if not token:
-            return []
-        response = requests.get(f"{token.api_server}v1/accounts", headers=self._headers(), timeout=15)
-        response.raise_for_status()
-        return response.json().get("accounts", [])
+    def _token_or_none(self) -> QuestradeToken | None:
+        return self.token or self.ensure_token()
 
-    def get_buying_power(self) -> float:
-        token = self.token or self.ensure_token()
+    def _get_json(self, path: str, params: dict | None = None) -> dict:
+        token = self._token_or_none()
         if not token:
-            return 10000.0
-        accounts = self.get_accounts()
-        if not accounts:
-            return 0.0
-        account_id = accounts[0].get("number")
+            return {}
         response = requests.get(
-            f"{token.api_server}v1/accounts/{account_id}/balances",
+            f"{token.api_server}v1/{path.lstrip('/')}",
             headers=self._headers(),
+            params=params or {},
             timeout=15,
         )
         response.raise_for_status()
-        per_currency = response.json().get("perCurrencyBalances", [])
+        return response.json()
+
+    def get_accounts(self) -> list[dict]:
+        return self._get_json("accounts").get("accounts", [])
+
+    def _default_account_id(self) -> str | None:
+        accounts = self.get_accounts()
+        if not accounts:
+            return None
+        return str(accounts[0].get("number"))
+
+    def get_balances(self, account_id: str = "") -> dict:
+        aid = account_id or self._default_account_id()
+        if not aid:
+            return {}
+        return self._get_json(f"accounts/{aid}/balances")
+
+    def get_positions(self, account_id: str = "") -> list[dict]:
+        aid = account_id or self._default_account_id()
+        if not aid:
+            return []
+        return self._get_json(f"accounts/{aid}/positions").get("positions", [])
+
+    def get_executions(self, account_id: str = "", start_time: str = "", end_time: str = "") -> list[dict]:
+        aid = account_id or self._default_account_id()
+        if not aid:
+            return []
+        params = {}
+        if start_time:
+            params["startTime"] = start_time
+        if end_time:
+            params["endTime"] = end_time
+        return self._get_json(f"accounts/{aid}/executions", params=params).get("executions", [])
+
+    def get_activities(self, account_id: str = "", start_time: str = "", end_time: str = "") -> list[dict]:
+        aid = account_id or self._default_account_id()
+        if not aid:
+            return []
+        params = {}
+        if start_time:
+            params["startTime"] = start_time
+        if end_time:
+            params["endTime"] = end_time
+        return self._get_json(f"accounts/{aid}/activities", params=params).get("activities", [])
+
+    def get_buying_power(self) -> float:
+        balances = self.get_balances()
+        per_currency = balances.get("perCurrencyBalances", [])
         for row in per_currency:
             if row.get("currency") in {"CAD", "USD"}:
                 return float(row.get("buyingPower", 0.0))
@@ -85,6 +124,50 @@ class QuestradeClient(BrokerClient):
             return int(symbols[0]["symbolId"])
 
         return None
+
+    def get_quotes(self, symbols: list[str]) -> list[dict]:
+        symbol_ids: list[str] = []
+        for symbol in symbols:
+            sid = self.resolve_symbol_id(symbol)
+            if sid is not None:
+                symbol_ids.append(str(sid))
+
+        if not symbol_ids:
+            return []
+
+        return self._get_json("markets/quotes", params={"ids": ",".join(symbol_ids)}).get("quotes", [])
+
+    def get_candles(
+        self,
+        symbol: str,
+        start_time: str,
+        end_time: str,
+        interval: str = "OneMinute",
+    ) -> list[dict]:
+        sid = self.resolve_symbol_id(symbol)
+        if sid is None:
+            return []
+
+        params = {
+            "startTime": start_time,
+            "endTime": end_time,
+            "interval": interval,
+        }
+        return self._get_json(f"markets/candles/{sid}", params=params).get("candles", [])
+
+    def get_account_market_snapshot(self, symbols: list[str], account_id: str = "") -> dict:
+        aid = account_id or self._default_account_id()
+        balances = self.get_balances(aid) if aid else {}
+        positions = self.get_positions(aid) if aid else []
+        quotes = self.get_quotes(symbols)
+        return {
+            "broker": "questrade",
+            "account_id": aid,
+            "balances": balances,
+            "positions": positions,
+            "quotes": quotes,
+            "symbols": symbols,
+        }
 
     def build_order_payload(self, account_id: str, order: OrderRequest, symbol_id: int) -> dict:
         return {
