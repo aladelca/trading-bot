@@ -19,9 +19,10 @@ Updated: 2026-02-13
 - ✅ End-to-end run path tests and integration checks
 - ✅ Agentic contracts + supervisor skeleton (`src/agents/*`)
 - ✅ Telegram webhook baseline with idempotent callback persistence (`apps/telegram_webhook/server.py`, `src/webhook/*`)
+- ✅ Broker hardening baseline (error taxonomy + retry/backoff + idempotency key propagation)
 
 ## Partially Implemented
-- 🟡 Questrade live order path: symbolId resolution added, but production hardening (order retry policy + broker-specific validation matrix) remains.
+- 🟡 Questrade live order path: symbolId + retry/idempotency baseline implemented; broker-specific validation matrix and SLA tuning remain.
 - 🟡 Portfolio/monitoring metrics: lightweight ledger and notional metrics added; advanced realized/unrealized PnL not finalized.
 
 ## Not Yet Implemented
@@ -30,7 +31,7 @@ Updated: 2026-02-13
 - ⬜ Advanced controlled-automation policy orchestration (basic env-driven auto-approve rules now implemented).
 
 ## Recommendation to reach “v1 operational”
-1. Implement symbolId lookup + validated order mapping per asset.
-2. Add portfolio ledger and realized/unrealized PnL tracker.
-3. Add operator runbook (`docs/runbooks.md`) with incident handling and rollback drills.
+1. Complete broker validation matrix + error/SLA policy tuning by order type/session.
+2. Add realized/unrealized PnL tracker on top of current ledger.
+3. Add public deployment hardening for webhook (TLS, reverse proxy, queue workers).
 4. Run 2-4 weeks paper with KPI snapshots before enabling non-dry-run live mode.

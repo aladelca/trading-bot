@@ -69,7 +69,7 @@ def run_once(settings: AppSettings, policy: RiskPolicy, audit: AuditLogger) -> l
             order_type="market",
             extended_hours=settings.runtime.allow_extended_hours,
         )
-        fill = router.execute(order, paper_mode=settings.runtime.paper_mode)
+        fill = router.execute(order, paper_mode=settings.runtime.paper_mode, request_id=request_id)
         fills.append(fill)
         audit.log("fill", fill)
 

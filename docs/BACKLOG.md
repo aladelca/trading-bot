@@ -1,12 +1,7 @@
 # Product Backlog (Prioritized)
 
 ## P0 (Critical)
-1. **TBOT-13** - Broker hardening matrix
-   - Acceptance:
-     - Retryable vs non-retryable taxonomy
-     - Backoff + max attempts
-     - Idempotency key propagation
-2. **TBOT-14** - Advanced PnL engine
+1. **TBOT-14** - Advanced PnL engine
    - Acceptance:
      - Realized and unrealized PnL by symbol
      - Position avg cost + mark-to-market snapshots
@@ -27,6 +22,10 @@
 7. **TBOT-A4** - Drift detection and rollback policy
 
 ## Completed Recently
+- **TBOT-13** - Broker hardening matrix baseline
+  - Retryable/fatal/blocked taxonomy
+  - Bounded retry with backoff
+  - Idempotency key propagation for live submit
 - **TBOT-12** - Production-style Telegram webhook baseline
   - Secret-token validation
   - Callback idempotency by update_id/callback_query.id

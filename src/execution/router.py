@@ -13,7 +13,7 @@ class ExecutionRouter:
         self.broker = broker
         self.paper = PaperExecutionEngine()
 
-    def execute(self, order: OrderRequest, paper_mode: bool = True) -> dict:
+    def execute(self, order: OrderRequest, paper_mode: bool = True, request_id: str = "") -> dict:
         if paper_mode:
             return self.paper.execute(order.symbol, order.side, order.quantity, order.extended_hours)
 
@@ -23,4 +23,4 @@ class ExecutionRouter:
             return {"status": "blocked", "reason": str(exc), "mode": "live"}
 
         dry_run = os.getenv("LIVE_ORDER_DRY_RUN", "true").lower() in {"1", "true", "yes", "on"}
-        return self.broker.submit_order(order, dry_run=dry_run)
+        return self.broker.submit_order(order, dry_run=dry_run, request_id=request_id)
