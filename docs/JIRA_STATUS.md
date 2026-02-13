@@ -4,7 +4,7 @@ _Last updated: 2026-02-13_
 
 ## Epic TBOT-EPIC-1: Core v1 Trading Pipeline
 - Status: **IN PROGRESS**
-- Progress: 92%
+- Progress: 96%
 
 ### Done
 - TBOT-1 Scaffold + config baseline ✅
@@ -27,6 +27,7 @@ _Last updated: 2026-02-13_
 
 ### In Progress
 - WEBHOOK-HARDEN-1 Deployment hardening baseline (TLS/reverse-proxy/worker scaffold) 🔄
+- PNL-FX-1 Multi-currency PnL normalization baseline 🔄
 
 ## Epic TBOT-EPIC-2: Agentic Autonomy with Governance
 - Status: **IN PROGRESS**

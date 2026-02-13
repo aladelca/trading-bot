@@ -66,6 +66,10 @@ Generate realized/unrealized PnL and save a snapshot:
 ```bash
 python apps/backtester/pnl_report.py
 ```
+Optional envs for normalization:
+- `BASE_CURRENCY` (default `USD`)
+- `FX_RATES_JSON` (example: `{"USD":1.0,"CAD":0.75}`)
+- `TRADE_CURRENCY` for new ledger writes
 
 ## Weekly postmortem report
 Generate weekly KPI + drift + learning recommendations:
