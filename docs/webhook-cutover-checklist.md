@@ -23,6 +23,8 @@
 - No callback retry spike after cutover.
 - No `failed` callback accumulation.
 - Health endpoints stable for >=15 minutes.
+- Evidence snapshot captured via `scripts/deploy/capture_webhook_evidence.sh`.
+- Incident report generated via `python apps/telegram_webhook/incident_report.py`.
 
 ## Rollback
 - Stop worker/server systemd services.
