@@ -84,7 +84,15 @@ Run production-style webhook receiver (with secret-token validation):
 ```bash
 python apps/telegram_webhook/server.py
 ```
-Set env vars: `TELEGRAM_WEBHOOK_SECRET`, `WEBHOOK_HOST`, `WEBHOOK_PORT`, `WEBHOOK_PATH`, `WEBHOOK_DB_PATH`.
+Run worker for async callback processing queue:
+```bash
+python apps/telegram_webhook/worker.py
+```
+Set env vars: `TELEGRAM_WEBHOOK_SECRET`, `WEBHOOK_HOST`, `WEBHOOK_PORT`, `WEBHOOK_PATH`, `WEBHOOK_DB_PATH`, `WEBHOOK_WORKER_POLL_SECONDS`, `WEBHOOK_WORKER_BATCH_SIZE`.
+
+For deployment scaffold, see:
+- `infra/docker/docker-compose.webhook.yml`
+- `infra/nginx/telegram_webhook.conf`
 
 ## Plan tracking
 - Implementation status vs plan: `docs/IMPLEMENTATION_STATUS.md`

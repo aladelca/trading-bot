@@ -11,4 +11,8 @@ def test_callback_store_upsert_idempotent(tmp_path):
     assert first is True
     assert second is False
 
+    pending = store.list_pending(limit=10)
+    assert len(pending) == 1
+
     store.mark_processed("k1", request_id="abc", decision="approve")
+    assert store.list_pending(limit=10) == []
