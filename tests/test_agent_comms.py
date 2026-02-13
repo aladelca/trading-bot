@@ -1,8 +1,10 @@
 from src.agents.comms import AgentSessionBridge
+from src.storage.audit_log import AuditLogger
 
 
-def test_agent_session_bridge_allows_route():
-    bridge = AgentSessionBridge(allowed_routes={("signal", "risk")})
+def test_agent_session_bridge_allows_route(tmp_path):
+    audit = AuditLogger(str(tmp_path / "audit.db"))
+    bridge = AgentSessionBridge(allowed_routes={("signal", "risk")}, audit=audit)
     env = bridge.send(
         request_id="r1",
         source_agent="signal",
@@ -12,10 +14,12 @@ def test_agent_session_bridge_allows_route():
     assert env.status == "ok"
     assert env.stage == "agent-comms"
     assert env.correlation_id == "r1:signal->risk"
+    assert audit.count_comms("ok") == 1
 
 
-def test_agent_session_bridge_blocks_disallowed_route():
-    bridge = AgentSessionBridge(allowed_routes={("signal", "risk")})
+def test_agent_session_bridge_blocks_disallowed_route(tmp_path):
+    audit = AuditLogger(str(tmp_path / "audit.db"))
+    bridge = AgentSessionBridge(allowed_routes={("signal", "risk")}, audit=audit)
     env = bridge.send(
         request_id="r1",
         source_agent="risk",
@@ -24,6 +28,7 @@ def test_agent_session_bridge_blocks_disallowed_route():
     )
     assert env.status == "blocked"
     assert env.reason == "route_not_allowed"
+    assert audit.count_comms("blocked") == 1
 
 
 def test_agent_cli_transport_disabled_by_default():
@@ -73,3 +78,27 @@ def test_agent_cli_transport_executes_allowlisted_command():
     assert env.status == "ok"
     assert env.payload["returncode"] == 0
     assert "bridge-ok" in env.payload["stdout"]
+
+
+def test_agent_cli_transport_dead_letter_after_retry(tmp_path):
+    audit = AuditLogger(str(tmp_path / "audit.db"))
+    bridge = AgentSessionBridge(
+        allowed_routes={("signal", "risk")},
+        cli_enabled=True,
+        cli_allowed_commands={"python"},
+        cli_timeout_seconds=3,
+        cli_max_retries=1,
+        audit=audit,
+    )
+    env = bridge.send(
+        request_id="r1",
+        source_agent="signal",
+        target_agent="risk",
+        payload={"command": "python -c \"import sys; sys.exit(2)\""},
+        transport="cli",
+    )
+    assert env.status == "error"
+    assert env.reason == "cli_failed"
+    assert env.payload["dead_letter"] is True
+    assert env.payload["attempts"] == 2
+    assert audit.count_comms("error") == 1
