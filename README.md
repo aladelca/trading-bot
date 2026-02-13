@@ -202,6 +202,14 @@ python apps/backtester/governance_emergency_override.py \
   --changes-json '{"AUTO_APPROVE_ENABLED": false}'
 ```
 
+Governance reconciliation cadence + stale decision cleanup:
+```bash
+python apps/backtester/governance_reconciliation.py \
+  --recommendation-id rec-123 \
+  --cadence-days 7 \
+  --stale-pending-hours 72
+```
+
 Manual CLI bridge invocation example:
 ```bash
 python apps/orchestrator/agent_cli_bridge.py \

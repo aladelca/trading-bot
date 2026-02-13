@@ -1,10 +1,10 @@
 # Product Backlog (Prioritized)
 
 ## P1 (High)
-1. **TBOT-A20** - Governance policy reconciliation review cadence + stale decision cleanup
-2. **BROKER-VALID-6** - Broker validation anomaly triage playbook + remediation matrix
-3. **WEBHOOK-HARDEN-7** - Delivery connector integration to provider + signed delivery receipts
-4. **TBOT-A21** - Governance emergency override multi-signature approvals + incident linkage
+1. **BROKER-VALID-6** - Broker validation anomaly triage playbook + remediation matrix
+2. **WEBHOOK-HARDEN-7** - Delivery connector integration to provider + signed delivery receipts
+3. **TBOT-A21** - Governance emergency override multi-signature approvals + incident linkage
+4. **TBOT-A22** - Governance reconciliation drift auto-ticketing + owner assignment
 
 ## P2 (Medium)
 6. **TBOT-A8** - Agent communication observability (delivery audit + retry/dead-letter policy)
@@ -13,6 +13,10 @@
 9. Policy simulation sandbox for approval/risk changes
 
 ## Completed Recently
+- **TBOT-A20** - Governance reconciliation review cadence + stale decision cleanup baseline
+  - Reconciliation evaluator for policy review cadence compliance
+  - Stale pending decision detection with cleanup-plan artifacts
+  - CLI helper + tests for overdue and stale detection behavior
 - **BROKER-API-1** - Questrade API capability expansion baseline
   - Added wrappers for balances, positions, executions, activities, quotes, candles
   - Added account+market snapshot helper CLI for strategy inputs
