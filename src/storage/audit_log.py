@@ -49,6 +49,19 @@ class AuditLogger:
             )
             """
         )
+        self.conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS governance_versions (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                recommendation_id TEXT NOT NULL,
+                version_tag TEXT NOT NULL,
+                status TEXT NOT NULL,
+                decided_by TEXT NOT NULL,
+                payload_json TEXT NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+            """
+        )
         self.conn.commit()
 
     def log(self, kind: str, payload: dict) -> None:
@@ -112,6 +125,56 @@ class AuditLogger:
                     "reason": str(row[5]),
                     "correlation_id": str(row[6]),
                     "payload": json.loads(row[7]),
+                }
+            )
+        return out
+
+    def log_governance_version(
+        self,
+        *,
+        recommendation_id: str,
+        version_tag: str,
+        status: str,
+        decided_by: str,
+        payload: dict,
+    ) -> None:
+        self.conn.execute(
+            """
+            INSERT INTO governance_versions(
+                recommendation_id, version_tag, status, decided_by, payload_json
+            ) VALUES (?, ?, ?, ?, ?)
+            """,
+            (
+                recommendation_id,
+                version_tag,
+                status,
+                decided_by,
+                json.dumps(payload, sort_keys=True),
+            ),
+        )
+        self.conn.commit()
+
+    def list_governance_versions(self, recommendation_id: str) -> list[dict]:
+        rows = self.conn.execute(
+            """
+            SELECT id, recommendation_id, version_tag, status, decided_by, payload_json, created_at
+            FROM governance_versions
+            WHERE recommendation_id=?
+            ORDER BY id ASC
+            """,
+            (recommendation_id,),
+        ).fetchall()
+        out: list[dict] = []
+        for row in rows:
+            out.append(
+                {
+                    "id": int(row[0]),
+                    "recommendation_id": str(row[1]),
+                    "version_tag": str(row[2]),
+                    "status": str(row[3]),
+                    "decided_by": str(row[4]),
+                    "payload": json.loads(row[5]),
+                    "created_at": str(row[6]),
                 }
             )
         return out
