@@ -196,7 +196,13 @@ Default is disabled (`false`).
 
 ## Broker order validation matrix (baseline)
 Before live submit, the bot validates:
-- symbol format
-- quantity > 0
+- symbol format and allowed symbol chars
+- side is `buy|sell`
+- quantity > 0 and global quantity cap
 - allowed order types (`market|limit|stop`)
 - session rule: `stop` orders blocked in extended hours
+- broker-specific edge rules (Questrade extended-hours restrictions)
+
+Rollout toggle:
+- `BROKER_VALIDATION_MODE=enforce` (default)
+- `BROKER_VALIDATION_MODE=report_only` (attach warning telemetry but do not block)
