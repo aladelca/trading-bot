@@ -4,7 +4,7 @@
 1. **TBOT-A5** - Governance threshold tuning from live paper metrics
 2. **BROKER-VALID-2** - Broker-specific edge-case matrix expansion
 3. **WEBHOOK-HARDEN-3** - VPS execution and DNS/webhook cutover validation
-4. **TBOT-A8** - Agent communication observability (delivery audit + retry/dead-letter policy)
+4. **TBOT-A9** - Agent communication delivery guarantees hardening (backoff tuning + DLQ replay tooling)
 
 ## P2 (Medium)
 6. **TBOT-A8** - Agent communication observability (delivery audit + retry/dead-letter policy)
@@ -13,6 +13,10 @@
 9. Policy simulation sandbox for approval/risk changes
 
 ## Completed Recently
+- **TBOT-A8** - Agent communication observability baseline
+  - Persisted comms audit events (`comms_events`) in audit DB
+  - CLI retry policy with dead-letter tagging on exhausted attempts
+  - Comms observability tests (ok/blocked/error counts)
 - **TBOT-A7** - Agent communication bridge implementation baseline
   - Route allow-list enforcement and correlation IDs
   - CLI transport support with explicit command allow-list and timeout

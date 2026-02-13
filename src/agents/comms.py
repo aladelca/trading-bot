@@ -4,8 +4,12 @@ import json
 import shlex
 import subprocess
 from dataclasses import dataclass, field
+from typing import TYPE_CHECKING
 
 from src.agents.contracts import StageEnvelope, blocked, error, ok
+
+if TYPE_CHECKING:
+    from src.storage.audit_log import AuditLogger
 
 
 @dataclass
@@ -16,6 +20,8 @@ class AgentSessionBridge:
     cli_enabled: bool = False
     cli_allowed_commands: set[str] = field(default_factory=set)
     cli_timeout_seconds: float = 5.0
+    cli_max_retries: int = 1
+    audit: AuditLogger | None = None
 
     def send(
         self,
@@ -30,7 +36,7 @@ class AgentSessionBridge:
         route = (source_agent.lower(), target_agent.lower())
 
         if self.allowed_routes and route not in self.allowed_routes:
-            return blocked(
+            env = blocked(
                 request_id,
                 "agent-comms",
                 "route_not_allowed",
@@ -40,6 +46,8 @@ class AgentSessionBridge:
                 transport=transport,
                 correlation_id=correlation_id,
             )
+            self._audit_env(env)
+            return env
 
         if transport == "cli":
             return self._send_cli(
@@ -50,7 +58,7 @@ class AgentSessionBridge:
                 correlation_id=correlation_id,
             )
 
-        return ok(
+        env = ok(
             request_id,
             "agent-comms",
             {"delivered": True, "message": payload},
@@ -59,6 +67,8 @@ class AgentSessionBridge:
             transport=transport,
             correlation_id=correlation_id,
         )
+        self._audit_env(env)
+        return env
 
     def _send_cli(
         self,
@@ -70,7 +80,7 @@ class AgentSessionBridge:
         correlation_id: str,
     ) -> StageEnvelope:
         if not self.cli_enabled:
-            return blocked(
+            env = blocked(
                 request_id,
                 "agent-comms",
                 "cli_transport_disabled",
@@ -79,10 +89,12 @@ class AgentSessionBridge:
                 transport="cli",
                 correlation_id=correlation_id,
             )
+            self._audit_env(env)
+            return env
 
         command_raw = str(payload.get("command", "")).strip()
         if not command_raw:
-            return blocked(
+            env = blocked(
                 request_id,
                 "agent-comms",
                 "missing_cli_command",
@@ -91,10 +103,12 @@ class AgentSessionBridge:
                 transport="cli",
                 correlation_id=correlation_id,
             )
+            self._audit_env(env)
+            return env
 
         cmd = shlex.split(command_raw)
         if not cmd:
-            return blocked(
+            env = blocked(
                 request_id,
                 "agent-comms",
                 "invalid_cli_command",
@@ -104,10 +118,12 @@ class AgentSessionBridge:
                 transport="cli",
                 correlation_id=correlation_id,
             )
+            self._audit_env(env)
+            return env
 
         base = cmd[0]
         if self.cli_allowed_commands and base not in self.cli_allowed_commands:
-            return blocked(
+            env = blocked(
                 request_id,
                 "agent-comms",
                 "cli_command_not_allowed",
@@ -117,41 +133,110 @@ class AgentSessionBridge:
                 transport="cli",
                 correlation_id=correlation_id,
             )
+            self._audit_env(env)
+            return env
 
-        try:
-            result = subprocess.run(
-                cmd,
-                check=False,
-                capture_output=True,
-                text=True,
-                timeout=self.cli_timeout_seconds,
-                shell=False,
-            )
-        except subprocess.TimeoutExpired:
-            return error(
+        attempts = 0
+        while attempts <= self.cli_max_retries:
+            attempts += 1
+            try:
+                result = subprocess.run(
+                    cmd,
+                    check=False,
+                    capture_output=True,
+                    text=True,
+                    timeout=self.cli_timeout_seconds,
+                    shell=False,
+                )
+            except subprocess.TimeoutExpired:
+                if attempts <= self.cli_max_retries:
+                    continue
+                env = error(
+                    request_id,
+                    "agent-comms",
+                    "cli_timeout",
+                    {
+                        "command": command_raw,
+                        "timeout_seconds": self.cli_timeout_seconds,
+                        "attempts": attempts,
+                        "dead_letter": True,
+                    },
+                    source_agent=source_agent,
+                    target_agent=target_agent,
+                    transport="cli",
+                    correlation_id=correlation_id,
+                )
+                self._audit_env(env)
+                return env
+
+            if result.returncode == 0:
+                env = ok(
+                    request_id,
+                    "agent-comms",
+                    {
+                        "delivered": True,
+                        "command": command_raw,
+                        "returncode": result.returncode,
+                        "stdout": result.stdout.strip(),
+                        "stderr": result.stderr.strip(),
+                        "attempts": attempts,
+                        "message": json.dumps(payload),
+                    },
+                    source_agent=source_agent,
+                    target_agent=target_agent,
+                    transport="cli",
+                    correlation_id=correlation_id,
+                )
+                self._audit_env(env)
+                return env
+
+            if attempts <= self.cli_max_retries:
+                continue
+
+            env = error(
                 request_id,
                 "agent-comms",
-                "cli_timeout",
-                {"command": command_raw, "timeout_seconds": self.cli_timeout_seconds},
+                "cli_failed",
+                {
+                    "delivered": False,
+                    "command": command_raw,
+                    "returncode": result.returncode,
+                    "stdout": result.stdout.strip(),
+                    "stderr": result.stderr.strip(),
+                    "attempts": attempts,
+                    "dead_letter": True,
+                },
                 source_agent=source_agent,
                 target_agent=target_agent,
                 transport="cli",
                 correlation_id=correlation_id,
             )
+            self._audit_env(env)
+            return env
 
-        return ok(
+        env = error(
             request_id,
             "agent-comms",
-            {
-                "delivered": result.returncode == 0,
-                "command": command_raw,
-                "returncode": result.returncode,
-                "stdout": result.stdout.strip(),
-                "stderr": result.stderr.strip(),
-                "message": json.dumps(payload),
-            },
+            "cli_failed",
+            {"dead_letter": True, "attempts": attempts},
             source_agent=source_agent,
             target_agent=target_agent,
             transport="cli",
             correlation_id=correlation_id,
+        )
+        self._audit_env(env)
+        return env
+
+    def _audit_env(self, env: StageEnvelope) -> None:
+        if not self.audit:
+            return
+        self.audit.log_comms(
+            request_id=env.request_id,
+            source_agent=env.source_agent,
+            target_agent=env.target_agent,
+            transport=env.transport,
+            status=env.status,
+            reason=env.reason,
+            correlation_id=env.correlation_id,
+            payload=env.payload,
         )

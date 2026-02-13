@@ -33,12 +33,59 @@ class AuditLogger:
             )
             """
         )
+        self.conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS comms_events (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                request_id TEXT NOT NULL,
+                source_agent TEXT NOT NULL,
+                target_agent TEXT NOT NULL,
+                transport TEXT NOT NULL,
+                status TEXT NOT NULL,
+                reason TEXT NOT NULL DEFAULT '',
+                correlation_id TEXT NOT NULL,
+                payload_json TEXT NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+            """
+        )
         self.conn.commit()
 
     def log(self, kind: str, payload: dict) -> None:
         self.conn.execute(
             "INSERT INTO events(kind, payload_json) VALUES (?, ?)",
             (kind, json.dumps(payload, sort_keys=True)),
+        )
+        self.conn.commit()
+
+    def log_comms(
+        self,
+        *,
+        request_id: str,
+        source_agent: str,
+        target_agent: str,
+        transport: str,
+        status: str,
+        reason: str,
+        correlation_id: str,
+        payload: dict,
+    ) -> None:
+        self.conn.execute(
+            """
+            INSERT INTO comms_events(
+                request_id, source_agent, target_agent, transport, status, reason, correlation_id, payload_json
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                request_id,
+                source_agent,
+                target_agent,
+                transport,
+                status,
+                reason,
+                correlation_id,
+                json.dumps(payload, sort_keys=True),
+            ),
         )
         self.conn.commit()
 
@@ -67,4 +114,11 @@ class AuditLogger:
             row = self.conn.execute("SELECT COUNT(*) FROM events WHERE kind=?", (kind,)).fetchone()
         else:
             row = self.conn.execute("SELECT COUNT(*) FROM events").fetchone()
+        return int(row[0]) if row else 0
+
+    def count_comms(self, status: str | None = None) -> int:
+        if status:
+            row = self.conn.execute("SELECT COUNT(*) FROM comms_events WHERE status=?", (status,)).fetchone()
+        else:
+            row = self.conn.execute("SELECT COUNT(*) FROM comms_events").fetchone()
         return int(row[0]) if row else 0

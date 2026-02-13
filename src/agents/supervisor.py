@@ -42,6 +42,7 @@ class SupervisorAgent:
             if c.strip()
         }
         cli_timeout = float(os.getenv("AGENT_CLI_TIMEOUT_SECONDS", "5"))
+        cli_retries = int(os.getenv("AGENT_CLI_MAX_RETRIES", "1"))
 
         self.bridge = AgentSessionBridge(
             allowed_routes={
@@ -53,6 +54,8 @@ class SupervisorAgent:
             cli_enabled=cli_enabled,
             cli_allowed_commands=cli_allowed,
             cli_timeout_seconds=cli_timeout,
+            cli_max_retries=cli_retries,
+            audit=self.audit,
         )
 
     def run_one_cycle(self) -> list[StageEnvelope]:
