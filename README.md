@@ -177,6 +177,16 @@ python apps/backtester/governance_drift_ack.py \
   --valid-minutes 120
 ```
 
+Governance emergency override protocol:
+```bash
+python apps/backtester/governance_emergency_override.py \
+  --policy-id auto-approve-policy \
+  --approved-by adrian \
+  --reason "incident-mitigation" \
+  --override-minutes 30 \
+  --changes-json '{"AUTO_APPROVE_ENABLED": false}'
+```
+
 Manual CLI bridge invocation example:
 ```bash
 python apps/orchestrator/agent_cli_bridge.py \
