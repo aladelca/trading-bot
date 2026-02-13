@@ -11,7 +11,7 @@ def _event_key(update: dict) -> str:
     return f"u:{update_id}|cb:{cb_id}"
 
 
-def process_telegram_update(update: dict, store: CallbackStore) -> dict:
+def enqueue_telegram_update(update: dict, store: CallbackStore) -> dict:
     key = _event_key(update)
     update_id = update.get("update_id")
     cb = update.get("callback_query", {})
@@ -20,20 +20,34 @@ def process_telegram_update(update: dict, store: CallbackStore) -> dict:
     inserted = store.upsert_event(key, update, update_id, cb_id)
     if not inserted:
         return {"status": "duplicate", "event_key": key}
+    return {"status": "queued", "event_key": key}
 
-    data = cb.get("data", "")
-    if ":" not in data:
-        return {"status": "ignored", "event_key": key}
 
-    action, request_id = data.split(":", 1)
-    decision = parse_callback_decision(f"{action}:{request_id}", request_id)
-    if decision is None:
-        return {"status": "ignored", "event_key": key}
+def process_pending_once(store: CallbackStore, limit: int = 50) -> list[dict]:
+    out: list[dict] = []
+    for event_key, update in store.list_pending(limit=limit):
+        cb = update.get("callback_query", {})
+        data = cb.get("data", "")
 
-    store.mark_processed(key, request_id=request_id, decision="approve" if decision else "reject")
-    return {
-        "status": "processed",
-        "event_key": key,
-        "request_id": request_id,
-        "decision": bool(decision),
-    }
+        if ":" not in data:
+            store.mark_ignored(event_key, "invalid_callback_data")
+            out.append({"status": "ignored", "event_key": event_key})
+            continue
+
+        action, request_id = data.split(":", 1)
+        decision = parse_callback_decision(f"{action}:{request_id}", request_id)
+        if decision is None:
+            store.mark_ignored(event_key, "unrecognized_decision")
+            out.append({"status": "ignored", "event_key": event_key})
+            continue
+
+        store.mark_processed(event_key, request_id=request_id, decision="approve" if decision else "reject")
+        out.append(
+            {
+                "status": "processed",
+                "event_key": event_key,
+                "request_id": request_id,
+                "decision": bool(decision),
+            }
+        )
+    return out

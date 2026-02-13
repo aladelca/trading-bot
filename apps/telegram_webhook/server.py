@@ -5,7 +5,7 @@ import os
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 from src.webhook.callback_store import CallbackStore
-from src.webhook.telegram_processor import process_telegram_update
+from src.webhook.telegram_processor import enqueue_telegram_update
 
 WEBHOOK_SECRET = os.getenv("TELEGRAM_WEBHOOK_SECRET", "")
 WEBHOOK_HOST = os.getenv("WEBHOOK_HOST", "0.0.0.0")
@@ -39,7 +39,7 @@ class Handler(BaseHTTPRequestHandler):
             content_len = int(self.headers.get("Content-Length", "0"))
             body = self.rfile.read(content_len)
             update = json.loads(body.decode() or "{}")
-            result = process_telegram_update(update, self.store)
+            result = enqueue_telegram_update(update, self.store)
             self._json(200, result)
         except Exception as exc:  # defensive boundary
             self._json(500, {"error": str(exc)})
