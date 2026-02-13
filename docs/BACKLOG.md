@@ -1,10 +1,10 @@
 # Product Backlog (Prioritized)
 
 ## P1 (High)
-1. **BROKER-VALID-2** - Broker-specific edge-case matrix expansion
-2. **WEBHOOK-HARDEN-3** - VPS execution and DNS/webhook cutover validation
-3. **TBOT-A13** - Scheduled governance calibration delivery (cron + channel routing)
-4. **TBOT-A14** - Governance recommendation approval workflow (human accept/reject/change-set)
+1. **WEBHOOK-HARDEN-3** - VPS execution and DNS/webhook cutover validation
+2. **TBOT-A13** - Scheduled governance calibration delivery (cron + channel routing)
+3. **TBOT-A14** - Governance recommendation approval workflow (human accept/reject/change-set)
+4. **BROKER-VALID-3** - Broker validation matrix rollout toggles + broker-side rejection telemetry
 
 ## P2 (Medium)
 6. **TBOT-A8** - Agent communication observability (delivery audit + retry/dead-letter policy)
@@ -13,6 +13,10 @@
 9. Policy simulation sandbox for approval/risk changes
 
 ## Completed Recently
+- **BROKER-VALID-2** - Broker-specific edge-case matrix expansion baseline
+  - Added side/symbol sanitation and hard quantity caps
+  - Added Questrade extended-hours edge rules with explicit block reasons
+  - Added validation coverage in matrix and submit-path tests
 - **TBOT-A5** - Governance threshold tuning baseline from paper KPIs
   - Heuristic tuning recommendations for min confidence and allowed tiers
   - CLI runner for KPI-driven recommendation generation

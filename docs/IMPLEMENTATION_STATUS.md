@@ -22,6 +22,7 @@ Updated: 2026-02-13
 - ✅ Webhook server/worker queue hardening baseline (health endpoint, payload size guard, retry/fail states)
 - ✅ Webhook production rollout assets (prod Nginx TLS template, systemd units, TLS bootstrap + healthcheck scripts, deployment checklist)
 - ✅ Broker hardening baseline (error taxonomy + retry/backoff + idempotency key propagation)
+- ✅ Broker validation edge-matrix baseline v2 (symbol/side hygiene + quantity caps + Questrade extended-hours constraints)
 - ✅ Advanced PnL baseline (realized/unrealized + avg cost + snapshot persistence)
 - ✅ Multi-currency PnL normalization baseline (base-currency conversion with FX map)
 - ✅ Weekly postmortem automation baseline (`apps/backtester/weekly_postmortem.py`)
