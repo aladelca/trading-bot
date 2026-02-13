@@ -87,11 +87,14 @@ Optional inter-agent CLI bridge controls:
 - `AGENT_CLI_ALLOWED_COMMANDS=python`
 - `AGENT_CLI_TIMEOUT_SECONDS=5`
 - `AGENT_CLI_MAX_RETRIES=1`
+- `AGENT_CLI_RETRY_BACKOFF_SECONDS=0.2`
 - `AGENT_ALLOWED_ROUTES=signal:risk,risk:execution`
 
 Comms observability:
 - bridge events are stored in `comms_events` table in `AUDIT_DB_PATH`
-- failed CLI deliveries are retried up to `AGENT_CLI_MAX_RETRIES` then tagged dead-letter
+- failed CLI deliveries are retried up to `AGENT_CLI_MAX_RETRIES` with backoff then tagged dead-letter
+- replay dead letters manually:
+  - `python apps/orchestrator/agent_cli_dlq_replay.py --limit 10`
 
 Manual CLI bridge invocation example:
 ```bash

@@ -32,7 +32,7 @@ _Last updated: 2026-02-13_
 
 ## Epic TBOT-EPIC-2: Agentic Autonomy with Governance
 - Status: **IN PROGRESS**
-- Progress: 96%
+- Progress: 99%
 
 ### Done
 - TBOT-A1 Multi-agent contracts and supervisor skeleton ✅
@@ -41,7 +41,7 @@ _Last updated: 2026-02-13_
 - TBOT-A4 Drift detection and rollback recommendations ✅
 
 ### In Progress
-- TBOT-A9 Agent communication delivery guarantees hardening (backoff tuning + DLQ replay tooling) 🔄
+- TBOT-A10 Governance policy simulation sandbox (what-if approvals/risk) 🔄
 
 ### To Do
 - TBOT-A5 Governance threshold tuning using 2-4 week paper metrics
@@ -50,3 +50,4 @@ _Last updated: 2026-02-13_
 - TBOT-A6 Agent communication bridge design (CLI/session protocol + envelope contract) ✅
 - TBOT-A7 Agent communication bridge implementation (auth allow-list + routing + CLI transport) ✅
 - TBOT-A8 Agent communication observability (delivery audit + retry/dead-letter policy) ✅
+- TBOT-A9 Agent communication delivery guarantees hardening (backoff tuning + DLQ replay tooling) ✅

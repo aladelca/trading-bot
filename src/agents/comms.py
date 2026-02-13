@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import shlex
 import subprocess
+import time
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING
 
@@ -21,6 +22,7 @@ class AgentSessionBridge:
     cli_allowed_commands: set[str] = field(default_factory=set)
     cli_timeout_seconds: float = 5.0
     cli_max_retries: int = 1
+    cli_retry_backoff_seconds: float = 0.2
     audit: AuditLogger | None = None
 
     def send(
@@ -150,6 +152,7 @@ class AgentSessionBridge:
                 )
             except subprocess.TimeoutExpired:
                 if attempts <= self.cli_max_retries:
+                    time.sleep(self.cli_retry_backoff_seconds * attempts)
                     continue
                 env = error(
                     request_id,
@@ -191,6 +194,7 @@ class AgentSessionBridge:
                 return env
 
             if attempts <= self.cli_max_retries:
+                time.sleep(self.cli_retry_backoff_seconds * attempts)
                 continue
 
             env = error(
