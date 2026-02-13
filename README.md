@@ -112,3 +112,10 @@ You can enable strict auto-approval for high-confidence symbols only:
 - `AUTO_APPROVE_SYMBOLS=SPY,QQQ`
 
 Default is disabled (`false`).
+
+## Broker order validation matrix (baseline)
+Before live submit, the bot validates:
+- symbol format
+- quantity > 0
+- allowed order types (`market|limit|stop`)
+- session rule: `stop` orders blocked in extended hours

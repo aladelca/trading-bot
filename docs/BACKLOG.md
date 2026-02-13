@@ -7,7 +7,7 @@
 
 ## P2 (Medium)
 4. Webhook deployment finalization (real cert provisioning + domain + supervised process on host)
-5. Broker validation matrix tuning by order type/session
+5. Broker validation matrix tuning by order type/session (baseline implemented; extend for broker-specific edge cases)
 6. Multi-currency PnL normalization
 
 ## Completed Recently

@@ -9,6 +9,7 @@ from src.broker.questrade.auth import QuestradeToken, refresh_access_token
 from src.execution.errors import classify_broker_error
 from src.execution.idempotency import build_order_idempotency_key
 from src.execution.retry import RetryPolicy, with_retry
+from src.execution.validation import validate_order_matrix
 
 
 class QuestradeClient(BrokerClient):
@@ -126,6 +127,10 @@ class QuestradeClient(BrokerClient):
             }
 
     def submit_order(self, order: OrderRequest, dry_run: bool = True, request_id: str = "") -> dict:
+        validation = validate_order_matrix(order)
+        if not validation.ok:
+            return {"status": "blocked", "reason": validation.reason, "broker": "questrade"}
+
         if dry_run:
             return {"status": "dry-run", "broker": "questrade", **asdict(order)}
 
