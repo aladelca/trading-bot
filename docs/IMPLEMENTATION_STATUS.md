@@ -36,6 +36,7 @@ Updated: 2026-02-13
 - ✅ Governance threshold calibration baseline (replay-pack candidate ranking + calibration CLI)
 - ✅ Weekly governance calibration artifact baseline (weekly report generator with KPI snapshot + candidate ranking)
 - ✅ Scheduled governance calibration delivery baseline (manifest generation + cron helper + routing envs)
+- ✅ Governance recommendation approval workflow baseline (accept/reject/change-set with explicit decision artifacts)
 - ✅ Governance threshold tuning baseline from paper KPI metrics (recommended min confidence + allowed tiers)
 
 ## Partially Implemented
