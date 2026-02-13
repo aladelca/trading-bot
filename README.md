@@ -312,3 +312,9 @@ Validation rollout metrics dashboard:
 python apps/backtester/broker_validation_dashboard.py \
   --records-json '[{"status":"blocked","rejection_source":"pre_trade_validation"},{"status":"error","rejection_source":"broker_api"}]'
 ```
+
+Validation anomaly triage + remediation matrix:
+```bash
+python apps/backtester/broker_validation_triage.py \
+  --records-json '[{"status":"error","rejection_source":"broker_api"},{"status":"blocked","rejection_source":"pre_trade_validation"}]'
+```

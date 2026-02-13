@@ -30,6 +30,7 @@ Updated: 2026-02-13
 - ✅ Broker validation rollout/telemetry baseline v3 (`BROKER_VALIDATION_MODE` + rejection source telemetry)
 - ✅ Broker validation drift-control baseline v4 (report-only expiry + hard-fail auto-revert)
 - ✅ Broker validation metrics baseline v5 (dashboard metrics + threshold alerts)
+- ✅ Broker validation anomaly triage baseline v6 (playbook + remediation matrix)
 - ✅ Questrade API capability expansion baseline (balances/positions/executions/activities/quotes/candles + snapshot helper)
 - ✅ Questrade retail read-only safety baseline (live submit block by default + manual trade ticket artifacts)
 - ✅ Advanced PnL baseline (realized/unrealized + avg cost + snapshot persistence)

@@ -1,10 +1,10 @@
 # Product Backlog (Prioritized)
 
 ## P1 (High)
-1. **BROKER-VALID-6** - Broker validation anomaly triage playbook + remediation matrix
-2. **WEBHOOK-HARDEN-7** - Delivery connector integration to provider + signed delivery receipts
-3. **TBOT-A21** - Governance emergency override multi-signature approvals + incident linkage
-4. **TBOT-A22** - Governance reconciliation drift auto-ticketing + owner assignment
+1. **WEBHOOK-HARDEN-7** - Delivery connector integration to provider + signed delivery receipts
+2. **TBOT-A21** - Governance emergency override multi-signature approvals + incident linkage
+3. **TBOT-A22** - Governance reconciliation drift auto-ticketing + owner assignment
+4. **BROKER-VALID-7** - Validation anomaly auto-remediation runbook execution hooks
 
 ## P2 (Medium)
 6. **TBOT-A8** - Agent communication observability (delivery audit + retry/dead-letter policy)
@@ -13,6 +13,10 @@
 9. Policy simulation sandbox for approval/risk changes
 
 ## Completed Recently
+- **BROKER-VALID-6** - Broker validation anomaly triage playbook + remediation matrix baseline
+  - Alert-to-owner/severity triage evaluator from validation metrics
+  - Deterministic remediation action matrix for blocked/error/auto-revert anomalies
+  - CLI helper + tests for alert and non-alert paths
 - **BROKER-ACCESS-1** - Questrade retail read-only mode + manual trade ticket baseline
   - Added retail-safe execution block for live order submit path by default
   - Added account mode control (`QUESTRADE_ACCOUNT_MODE`)
