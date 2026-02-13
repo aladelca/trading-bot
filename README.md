@@ -86,7 +86,12 @@ Optional inter-agent CLI bridge controls:
 - `AGENT_CLI_ENABLED=false`
 - `AGENT_CLI_ALLOWED_COMMANDS=python`
 - `AGENT_CLI_TIMEOUT_SECONDS=5`
+- `AGENT_CLI_MAX_RETRIES=1`
 - `AGENT_ALLOWED_ROUTES=signal:risk,risk:execution`
+
+Comms observability:
+- bridge events are stored in `comms_events` table in `AUDIT_DB_PATH`
+- failed CLI deliveries are retried up to `AGENT_CLI_MAX_RETRIES` then tagged dead-letter
 
 Manual CLI bridge invocation example:
 ```bash
