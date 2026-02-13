@@ -40,6 +40,7 @@ Updated: 2026-02-13
 - ✅ Scheduled governance calibration delivery baseline (manifest generation + cron helper + routing envs)
 - ✅ Governance recommendation approval workflow baseline (accept/reject/change-set with explicit decision artifacts)
 - ✅ Governance recommendation apply guardrails baseline (safety checks + rollback template generation)
+- ✅ Governance recommendation audit/versioning ledger baseline (versioned governance decisions in audit DB)
 - ✅ Governance threshold tuning baseline from paper KPI metrics (recommended min confidence + allowed tiers)
 
 ## Partially Implemented

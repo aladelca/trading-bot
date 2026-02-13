@@ -151,6 +151,16 @@ python apps/backtester/governance_apply_guardrails.py \
   --previous-policy-json '{"AUTO_APPROVE_MIN_CONFIDENCE":0.92,"AUTO_APPROVE_ALLOWED_TIERS":"tier-1,tier-2"}'
 ```
 
+Governance recommendation versioning ledger:
+```bash
+python apps/backtester/governance_versioning.py \
+  --recommendation-id rec-1 \
+  --version-tag v1 \
+  --status approved \
+  --decided-by adrian \
+  --payload-json '{"recommended_auto_approve_min_confidence":0.9}'
+```
+
 Manual CLI bridge invocation example:
 ```bash
 python apps/orchestrator/agent_cli_bridge.py \
