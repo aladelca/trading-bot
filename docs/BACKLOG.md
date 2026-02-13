@@ -4,7 +4,7 @@
 1. **TBOT-A5** - Governance threshold tuning from live paper metrics
 2. **BROKER-VALID-2** - Broker-specific edge-case matrix expansion
 3. **WEBHOOK-HARDEN-3** - VPS execution and DNS/webhook cutover validation
-4. **TBOT-A12** - Weekly governance calibration automation + report artifacting
+4. **TBOT-A13** - Scheduled governance calibration delivery (cron + channel routing)
 
 ## P2 (Medium)
 6. **TBOT-A8** - Agent communication observability (delivery audit + retry/dead-letter policy)
@@ -13,6 +13,10 @@
 9. Policy simulation sandbox for approval/risk changes
 
 ## Completed Recently
+- **TBOT-A12** - Weekly governance calibration automation baseline
+  - Weekly markdown report generator (`apps/backtester/weekly_governance_calibration.py`)
+  - Includes KPI snapshot + threshold ranking artifact
+  - Test coverage for artifact generation flow
 - **TBOT-A11** - Governance threshold calibration baseline
   - Replay-pack evaluator for candidate confidence thresholds
   - CLI calibration runner (`apps/backtester/threshold_calibration.py`)
