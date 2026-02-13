@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from dataclasses import asdict
 
 import requests
@@ -114,6 +115,12 @@ class QuestradeClient(BrokerClient):
                     "error_category": info.category,
                     "reason": info.reason,
                     "http_status": response.status_code,
+                    "rejection_source": "broker_api",
+                    "telemetry": {
+                        "phase": "submit",
+                        "category": info.category,
+                        "http_status": response.status_code,
+                    },
                 }
             return {"status": "submitted", "broker": "questrade", "response": response.json()}
         except requests.RequestException as exc:
@@ -124,15 +131,39 @@ class QuestradeClient(BrokerClient):
                 "error_category": info.category,
                 "reason": info.reason,
                 "message": str(exc),
+                "rejection_source": "broker_transport",
+                "telemetry": {
+                    "phase": "submit",
+                    "category": info.category,
+                    "http_status": 503,
+                },
             }
 
     def submit_order(self, order: OrderRequest, dry_run: bool = True, request_id: str = "") -> dict:
         validation = validate_order_matrix(order, broker="questrade")
+        validation_mode = os.getenv("BROKER_VALIDATION_MODE", "enforce").strip().lower()
+        validation_warning = None
         if not validation.ok:
-            return {"status": "blocked", "reason": validation.reason, "broker": "questrade"}
+            if validation_mode == "report_only":
+                validation_warning = {
+                    "reason": validation.reason,
+                    "rejection_source": "pre_trade_validation",
+                    "validation_mode": validation_mode,
+                }
+            else:
+                return {
+                    "status": "blocked",
+                    "reason": validation.reason,
+                    "broker": "questrade",
+                    "rejection_source": "pre_trade_validation",
+                    "validation_mode": validation_mode,
+                }
 
         if dry_run:
-            return {"status": "dry-run", "broker": "questrade", **asdict(order)}
+            out = {"status": "dry-run", "broker": "questrade", **asdict(order)}
+            if validation_warning:
+                out["validation_warning"] = validation_warning
+            return out
 
         token = self.token or self.ensure_token()
         if not token:
@@ -157,6 +188,8 @@ class QuestradeClient(BrokerClient):
             policy=policy,
         )
         result["idempotency_key"] = idem_key
+        if validation_warning:
+            result["validation_warning"] = validation_warning
         return result
 
     def place_order(self, order: OrderRequest) -> dict:

@@ -1,10 +1,10 @@
 # Product Backlog (Prioritized)
 
 ## P1 (High)
-1. **BROKER-VALID-3** - Broker validation matrix rollout toggles + broker-side rejection telemetry
-2. **WEBHOOK-HARDEN-4** - Host execution evidence capture + post-cutover incident playbook automation
-3. **TBOT-A15** - Governance recommendation application guardrails + rollback template
-4. **TBOT-A16** - Governance recommendation audit and versioning ledger
+1. **WEBHOOK-HARDEN-4** - Host execution evidence capture + post-cutover incident playbook automation
+2. **TBOT-A15** - Governance recommendation application guardrails + rollback template
+3. **TBOT-A16** - Governance recommendation audit and versioning ledger
+4. **BROKER-VALID-4** - Validation mode drift monitoring + hard-fail auto-revert policy
 
 ## P2 (Medium)
 6. **TBOT-A8** - Agent communication observability (delivery audit + retry/dead-letter policy)
@@ -13,6 +13,10 @@
 9. Policy simulation sandbox for approval/risk changes
 
 ## Completed Recently
+- **BROKER-VALID-3** - Validation rollout toggles + rejection telemetry baseline
+  - Added `BROKER_VALIDATION_MODE` (`enforce|report_only`)
+  - Added pre-trade rejection source metadata
+  - Added broker-side rejection telemetry payloads for API/transport failures
 - **TBOT-A14** - Governance recommendation approval workflow baseline
   - Human decision states: accept / reject / change-set
   - Workflow CLI for explicit decision artifacts
