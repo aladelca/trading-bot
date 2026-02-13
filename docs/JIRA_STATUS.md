@@ -33,6 +33,7 @@ _Last updated: 2026-02-13_
 - PNL-FX-1 Multi-currency PnL normalization baseline ✅
 - BROKER-VALID-2 Broker-specific edge-case validation matrix expansion ✅
 - BROKER-VALID-3 Validation rollout toggles + broker rejection telemetry baseline ✅
+- BROKER-VALID-4 Validation mode drift monitoring + hard-fail auto-revert policy ✅
 
 ## Epic TBOT-EPIC-2: Agentic Autonomy with Governance
 - Status: **IN PROGRESS**

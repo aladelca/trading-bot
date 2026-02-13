@@ -225,3 +225,6 @@ Before live submit, the bot validates:
 Rollout toggle:
 - `BROKER_VALIDATION_MODE=enforce` (default)
 - `BROKER_VALIDATION_MODE=report_only` (attach warning telemetry but do not block)
+- `BROKER_VALIDATION_AUTO_REVERT=true` (force fail-safe revert to enforce)
+- `BROKER_VALIDATION_REPORT_ONLY_SINCE_UTC=<ISO-8601 UTC>`
+- `BROKER_VALIDATION_REPORT_ONLY_MAX_MINUTES=<int>`
