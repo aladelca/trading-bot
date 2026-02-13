@@ -25,12 +25,16 @@ class CallbackStore:
                 payload_json TEXT NOT NULL,
                 processed INTEGER NOT NULL DEFAULT 0,
                 processing_state TEXT NOT NULL DEFAULT 'pending',
+                attempts INTEGER NOT NULL DEFAULT 0,
+                last_error TEXT,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
             """
         )
         self._ensure_column("reason", "TEXT")
         self._ensure_column("processing_state", "TEXT NOT NULL DEFAULT 'pending'")
+        self._ensure_column("attempts", "INTEGER NOT NULL DEFAULT 0")
+        self._ensure_column("last_error", "TEXT")
         self.conn.commit()
 
     def _ensure_column(self, name: str, ddl: str) -> None:
@@ -46,29 +50,34 @@ class CallbackStore:
         self.conn.execute(
             """
             INSERT INTO callback_events(
-                event_key, update_id, callback_query_id, payload_json, processed, processing_state
-            ) VALUES (?, ?, ?, ?, 0, 'pending')
+                event_key, update_id, callback_query_id, payload_json, processed, processing_state, attempts
+            ) VALUES (?, ?, ?, ?, 0, 'pending', 0)
             """,
             (event_key, update_id, callback_query_id, json.dumps(payload, sort_keys=True)),
         )
         self.conn.commit()
         return True
 
-    def list_pending(self, limit: int = 50) -> list[tuple[str, dict]]:
+    def claim_pending(self, limit: int = 50) -> list[tuple[str, dict]]:
         rows = self.conn.execute(
             "SELECT event_key, payload_json FROM callback_events WHERE processing_state='pending' ORDER BY created_at ASC LIMIT ?",
             (limit,),
         ).fetchall()
         out: list[tuple[str, dict]] = []
         for event_key, payload_json in rows:
+            self.conn.execute(
+                "UPDATE callback_events SET processing_state='in_progress', attempts=attempts+1 WHERE event_key=?",
+                (event_key,),
+            )
             out.append((event_key, json.loads(payload_json)))
+        self.conn.commit()
         return out
 
     def mark_processed(self, event_key: str, request_id: str, decision: str) -> None:
         self.conn.execute(
             """
             UPDATE callback_events
-            SET processed=1, processing_state='processed', request_id=?, decision=?, reason=NULL
+            SET processed=1, processing_state='processed', request_id=?, decision=?, reason=NULL, last_error=NULL
             WHERE event_key=?
             """,
             (request_id, decision, event_key),
@@ -79,9 +88,19 @@ class CallbackStore:
         self.conn.execute(
             """
             UPDATE callback_events
-            SET processed=1, processing_state='ignored', reason=?
+            SET processed=1, processing_state='ignored', reason=?, last_error=NULL
             WHERE event_key=?
             """,
             (reason, event_key),
+        )
+        self.conn.commit()
+
+    def mark_failed(self, event_key: str, error_text: str, max_attempts: int = 5) -> None:
+        row = self.conn.execute("SELECT attempts FROM callback_events WHERE event_key=?", (event_key,)).fetchone()
+        attempts = int(row[0]) if row else max_attempts
+        next_state = "failed" if attempts >= max_attempts else "pending"
+        self.conn.execute(
+            "UPDATE callback_events SET processing_state=?, last_error=? WHERE event_key=?",
+            (next_state, error_text[:500], event_key),
         )
         self.conn.commit()
