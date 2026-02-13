@@ -1,10 +1,10 @@
 # Product Backlog (Prioritized)
 
 ## P1 (High)
-1. **TBOT-A13** - Scheduled governance calibration delivery (cron + channel routing)
-2. **TBOT-A14** - Governance recommendation approval workflow (human accept/reject/change-set)
-3. **BROKER-VALID-3** - Broker validation matrix rollout toggles + broker-side rejection telemetry
-4. **WEBHOOK-HARDEN-4** - Host execution evidence capture + post-cutover incident playbook automation
+1. **TBOT-A14** - Governance recommendation approval workflow (human accept/reject/change-set)
+2. **BROKER-VALID-3** - Broker validation matrix rollout toggles + broker-side rejection telemetry
+3. **WEBHOOK-HARDEN-4** - Host execution evidence capture + post-cutover incident playbook automation
+4. **TBOT-A15** - Governance recommendation application guardrails + rollback template
 
 ## P2 (Medium)
 6. **TBOT-A8** - Agent communication observability (delivery audit + retry/dead-letter policy)
@@ -13,6 +13,10 @@
 9. Policy simulation sandbox for approval/risk changes
 
 ## Completed Recently
+- **TBOT-A13** - Scheduled governance calibration delivery baseline
+  - Scheduled delivery manifest generator (`apps/backtester/scheduled_governance_delivery.py`)
+  - Cron install helper (`scripts/deploy/install_governance_calibration_cron.sh`)
+  - Delivery routing envs and manifest tests
 - **WEBHOOK-HARDEN-3** - VPS cutover validation baseline
   - Host-side cutover validation script (`scripts/deploy/validate_webhook_cutover.sh`)
   - Go/no-go acceptance checklist (`docs/webhook-cutover-checklist.md`)
