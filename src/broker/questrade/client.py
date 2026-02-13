@@ -127,7 +127,7 @@ class QuestradeClient(BrokerClient):
             }
 
     def submit_order(self, order: OrderRequest, dry_run: bool = True, request_id: str = "") -> dict:
-        validation = validate_order_matrix(order)
+        validation = validate_order_matrix(order, broker="questrade")
         if not validation.ok:
             return {"status": "blocked", "reason": validation.reason, "broker": "questrade"}
 
