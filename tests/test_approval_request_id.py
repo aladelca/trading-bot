@@ -10,8 +10,8 @@ class DummyTelegramClient:
         self.ids.append(request_id)
         return 1
 
-    def wait_for_decision(self, request_id: str):
-        return True
+    def wait_for_decision(self, request_id: str, start_offset: int = 0):
+        return True, start_offset
 
 
 def test_request_id_is_unique_per_call(monkeypatch):
