@@ -53,8 +53,8 @@ _Last updated: 2026-02-13_
 - TBOT-A4 Drift detection and rollback recommendations ✅
 
 ### To Do
-- TBOT-A22 Governance reconciliation drift auto-ticketing + owner assignment
 - TBOT-A23 Governance override quorum policy templates + role-based signer matrix
+- TBOT-A24 Governance stale-ticket SLA tracking + escalation routing
 
 ### Done
 - TBOT-A6 Agent communication bridge design (CLI/session protocol + envelope contract) ✅
@@ -73,4 +73,5 @@ _Last updated: 2026-02-13_
 - TBOT-A19 Governance emergency override protocol + expiry enforcement ✅
 - TBOT-A20 Governance policy reconciliation review cadence + stale decision cleanup ✅
 - TBOT-A21 Governance emergency override multi-signature approvals + incident linkage ✅
+- TBOT-A22 Governance reconciliation drift auto-ticketing + owner assignment ✅
 - TBOT-A5 Governance threshold tuning using 2-4 week paper metrics ✅

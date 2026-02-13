@@ -236,6 +236,12 @@ python apps/backtester/governance_reconciliation.py \
   --stale-pending-hours 72
 ```
 
+Generate auto-tickets from reconciliation findings:
+```bash
+python apps/backtester/governance_reconciliation_autoticket.py \
+  --reconciliation-json '{"recommendation_id":"rec-123","overdue_review":true,"stale_pending":[{"version_tag":"v2"}]}'
+```
+
 Manual CLI bridge invocation example:
 ```bash
 python apps/orchestrator/agent_cli_bridge.py \

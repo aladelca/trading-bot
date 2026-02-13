@@ -54,6 +54,7 @@ Updated: 2026-02-13
 - ✅ Governance emergency override baseline (override artifact + expiry enforcement + cli)
 - ✅ Governance emergency override multisig baseline (incident-linked quorum approvals)
 - ✅ Governance reconciliation baseline (review cadence checks + stale decision cleanup plans)
+- ✅ Governance reconciliation auto-ticketing baseline (owner assignment for overdue/stale findings)
 - ✅ Governance threshold tuning baseline from paper KPI metrics (recommended min confidence + allowed tiers)
 
 ## Partially Implemented
