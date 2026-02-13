@@ -4,7 +4,7 @@
 1. **TBOT-A5** - Governance threshold tuning from live paper metrics
 2. **BROKER-VALID-2** - Broker-specific edge-case matrix expansion
 3. **WEBHOOK-HARDEN-3** - VPS execution and DNS/webhook cutover validation
-4. **TBOT-A10** - Governance policy simulation sandbox (what-if approvals/risk)
+4. **TBOT-A11** - Governance threshold calibration with scenario replay packs
 
 ## P2 (Medium)
 6. **TBOT-A8** - Agent communication observability (delivery audit + retry/dead-letter policy)
@@ -13,6 +13,10 @@
 9. Policy simulation sandbox for approval/risk changes
 
 ## Completed Recently
+- **TBOT-A10** - Governance policy simulation sandbox baseline
+  - What-if simulator for approval tier policy and drift severity outcomes
+  - CLI runner for scenario inputs (`apps/backtester/policy_simulation.py`)
+  - Unit tests for policy decisions and drift/recommendation outputs
 - **TBOT-A9** - Agent communication delivery guarantees baseline
   - Retry backoff control for CLI transport
   - Dead-letter query helpers in audit storage
