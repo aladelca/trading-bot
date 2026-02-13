@@ -244,7 +244,39 @@ trading-bot/
 
 ---
 
-## 13) Final Recommendation
+## 13) Agentic Architecture (Proposed)
+
+Introduce a supervised multi-agent topology:
+
+1. **Market-Intel Agent**
+   - Ingests and normalizes news + market context.
+2. **Signal Agent**
+   - Converts events into structured trade hypotheses.
+3. **Risk Agent**
+   - Enforces hard limits, whitelists, and sizing policy.
+4. **Approval Agent**
+   - Runs human-in-the-loop decision workflow (Telegram/webhook).
+5. **Execution Agent**
+   - Routes paper/live orders with guardrails and retries.
+6. **Portfolio Agent**
+   - Updates ledger, positions, and PnL metrics.
+7. **Supervisor Agent**
+   - Orchestrates sequence, circuit-breakers, and incident posture.
+8. **Review/Learning Agent**
+   - Produces periodic improvement recommendations (non-autonomous apply).
+
+### Agent handoff contract (minimum)
+Each stage produces a typed envelope:
+- `request_id`
+- `stage`
+- `status` (`ok|blocked|error`)
+- `payload`
+- `reason` (if blocked/error)
+- `timestamp_utc`
+
+---
+
+## 14) Final Recommendation
 
 This is **technically feasible** and a good fit for phased delivery.
 Use Questrade first if it matches your account and instrument needs, but preserve broker portability with a clean adapter design.

@@ -61,8 +61,16 @@ After running orchestrator cycles, generate KPI summary from audit DB:
 python apps/backtester/report.py
 ```
 
+## Agentic supervisor cycle
+Run the new supervised multi-agent pipeline skeleton:
+```bash
+python apps/orchestrator/agentic_main.py
+```
+
 ## Plan tracking
 - Implementation status vs plan: `docs/IMPLEMENTATION_STATUS.md`
+- Jira-style status board: `docs/JIRA_STATUS.md`
+- Backlog tickets: `docs/BACKLOG.md`
 
 ## Portfolio ledger
 Executed/paper/dry-run trade intents are recorded in `data/portfolio.db` for lightweight metrics.
