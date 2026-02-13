@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import os
+
 from src.broker.base import OrderRequest
 from src.broker.questrade.client import QuestradeClient
 from src.execution.guardrails import LiveExecutionBlocked, assert_live_execution_allowed
@@ -18,10 +20,7 @@ class ExecutionRouter:
         try:
             assert_live_execution_allowed()
         except LiveExecutionBlocked as exc:
-            return {
-                "status": "blocked",
-                "reason": str(exc),
-                "mode": "live",
-            }
+            return {"status": "blocked", "reason": str(exc), "mode": "live"}
 
-        return self.broker.place_order(order)
+        dry_run = os.getenv("LIVE_ORDER_DRY_RUN", "true").lower() in {"1", "true", "yes", "on"}
+        return self.broker.submit_order(order, dry_run=dry_run)
