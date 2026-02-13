@@ -42,10 +42,13 @@
 - In webhook mode, verify worker is consuming pending callback queue.
 
 ## Webhook deployment baseline
-- Start services scaffold:
+- Local scaffold:
   - `docker compose -f infra/docker/docker-compose.webhook.yml up -d`
-- Ensure certificate files are present in `infra/nginx/certs/`.
-- Validate webhook path and secret header handling.
+- Production rollout:
+  - follow `docs/deployment-webhook-hardening.md`
+  - use `infra/nginx/telegram_webhook.prod.conf`
+  - install systemd services from `infra/systemd/`
+  - run `bash scripts/deploy/healthcheck_webhook.sh`
 
 ## 5) Rollback drill
 - Revert latest merge commit if runtime regression appears.
