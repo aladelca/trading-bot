@@ -14,6 +14,7 @@ class ApprovalGate:
     def __init__(self, required: bool = True, timeout_seconds: int = 20):
         self.required = required
         self.timeout_seconds = timeout_seconds
+        self.last_offset = 0
         token = os.getenv("TELEGRAM_BOT_TOKEN", "")
         chat_id = os.getenv("TELEGRAM_CHAT_ID", "")
         self.client = TelegramClient(TelegramConfig(token, chat_id), timeout_seconds) if token and chat_id else None
@@ -40,8 +41,9 @@ class ApprovalGate:
             f"ID: {request_id}"
         )
         self.client.send_approval_request(text=text, request_id=request_id)
-        decision = bool(self.client.wait_for_decision(request_id))
-        return decision, "telegram", request_id
+        decision, new_offset = self.client.wait_for_decision(request_id, start_offset=self.last_offset)
+        self.last_offset = new_offset
+        return bool(decision), "telegram", request_id
 
     def request(self, signal: TradeSignal) -> bool:
         decision, _source, _id = self.request_with_meta(signal)

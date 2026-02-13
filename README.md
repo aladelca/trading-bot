@@ -53,3 +53,4 @@ Update `.env`:
 - Live execution is blocked unless BOTH are explicitly set:
   - `LIVE_TRADING_ENABLED=true`
   - `LIVE_TRADING_CONFIRM=I_UNDERSTAND_LIVE_TRADING_RISK`
+- Even with live enabled, keep `LIVE_ORDER_DRY_RUN=true` until final launch.

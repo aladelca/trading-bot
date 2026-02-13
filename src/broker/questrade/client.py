@@ -9,10 +9,7 @@ from src.broker.questrade.auth import QuestradeToken, refresh_access_token
 
 
 class QuestradeClient(BrokerClient):
-    """Questrade adapter with token refresh + account helpers.
-
-    Live order placement remains disabled by default in this phase.
-    """
+    """Questrade adapter with token refresh + account helpers."""
 
     def __init__(self, client_id: str = "", refresh_token: str = "", practice: bool = True):
         self.client_id = client_id
@@ -36,11 +33,7 @@ class QuestradeClient(BrokerClient):
         token = self.token or self.ensure_token()
         if not token:
             return []
-        response = requests.get(
-            f"{token.api_server}v1/accounts",
-            headers=self._headers(),
-            timeout=15,
-        )
+        response = requests.get(f"{token.api_server}v1/accounts", headers=self._headers(), timeout=15)
         response.raise_for_status()
         return response.json().get("accounts", [])
 
@@ -78,10 +71,28 @@ class QuestradeClient(BrokerClient):
             "secondaryRoute": "AUTO",
         }
 
+    def submit_order(self, order: OrderRequest, dry_run: bool = True) -> dict:
+        if dry_run:
+            return {"status": "dry-run", "broker": "questrade", **asdict(order)}
+
+        token = self.token or self.ensure_token()
+        if not token:
+            return {"status": "blocked", "reason": "missing_token", "broker": "questrade"}
+
+        accounts = self.get_accounts()
+        if not accounts:
+            return {"status": "blocked", "reason": "missing_account", "broker": "questrade"}
+
+        account_id = str(accounts[0].get("number"))
+        payload = self.build_order_payload(account_id, order)
+        response = requests.post(
+            f"{token.api_server}v1/accounts/{account_id}/orders",
+            headers=self._headers(),
+            json=payload,
+            timeout=15,
+        )
+        response.raise_for_status()
+        return {"status": "submitted", "broker": "questrade", "response": response.json()}
+
     def place_order(self, order: OrderRequest) -> dict:
-        # Safety: remain simulated at this stage.
-        return {
-            "status": "paper-simulated",
-            "broker": "questrade",
-            **asdict(order),
-        }
+        return {"status": "paper-simulated", "broker": "questrade", **asdict(order)}

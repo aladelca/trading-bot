@@ -36,7 +36,15 @@ class TelegramClient:
         data = response.json()
         return int(data["result"]["message_id"])
 
-    def wait_for_decision(self, request_id: str, start_offset: int = 0) -> bool | None:
+    def answer_callback_query(self, callback_query_id: str, text: str = "Decision received") -> None:
+        response = requests.post(
+            f"{self.base_url}/answerCallbackQuery",
+            json={"callback_query_id": callback_query_id, "text": text, "show_alert": False},
+            timeout=10,
+        )
+        response.raise_for_status()
+
+    def wait_for_decision(self, request_id: str, start_offset: int = 0) -> tuple[bool | None, int]:
         deadline = time.time() + self.timeout_seconds
         offset = start_offset
 
@@ -56,9 +64,12 @@ class TelegramClient:
                 callback_data = cb.get("data", "")
                 decision = parse_callback_decision(callback_data, request_id)
                 if decision is not None:
-                    return decision
+                    cb_id = cb.get("id")
+                    if cb_id:
+                        self.answer_callback_query(cb_id)
+                    return decision, offset
             time.sleep(0.2)
-        return None
+        return None, offset
 
 
 def parse_callback_decision(callback_data: str, request_id: str) -> bool | None:
