@@ -232,6 +232,12 @@ trading-bot/
 - [ ] KPI dashboard script/report.
 - [ ] End-to-end integration tests.
 
+## Sprint 3 (Agentic Governance + Comms)
+- [ ] TBOT-A5 threshold tuning with 2-4 week paper metrics.
+- [ ] TBOT-A6 agent communication bridge design (CLI/session protocol).
+- [ ] TBOT-A7 agent communication bridge implementation + auth/allow-list.
+- [ ] TBOT-A8 comms observability (delivery audit, retries, dead-letter handling).
+
 ---
 
 ## 12) Definition of Done (v1)
@@ -264,15 +270,23 @@ Introduce a supervised multi-agent topology:
    - Orchestrates sequence, circuit-breakers, and incident posture.
 8. **Review/Learning Agent**
    - Produces periodic improvement recommendations (non-autonomous apply).
+9. **Agent Communication Bridge (CLI/Session Bus)**
+   - Provides explicit inter-agent communication channel (CLI/session-based messaging).
+   - Supports request/response envelopes, correlation IDs, and delivery status.
+   - Enforces allow-lists, auth context, and full audit logging of agent-to-agent instructions.
 
 ### Agent handoff contract (minimum)
 Each stage produces a typed envelope:
 - `request_id`
+- `source_agent`
+- `target_agent`
+- `transport` (`internal|cli|session-bridge`)
 - `stage`
 - `status` (`ok|blocked|error`)
 - `payload`
 - `reason` (if blocked/error)
 - `timestamp_utc`
+- `correlation_id`
 
 ---
 
