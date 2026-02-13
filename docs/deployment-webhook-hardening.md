@@ -42,7 +42,9 @@ Harden Telegram webhook operations for production deployment with TLS, reverse p
    - Include secret token matching `TELEGRAM_WEBHOOK_SECRET`
 7. **Post-deploy validation**
    - `bash scripts/deploy/healthcheck_webhook.sh`
+   - `bash scripts/deploy/validate_webhook_cutover.sh`
    - Check worker logs: queue drains, no retry spikes
+   - Apply go/no-go criteria from `docs/webhook-cutover-checklist.md`
 
 ## Operational checks
 - Webhook health: `GET /health`

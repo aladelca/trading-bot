@@ -49,6 +49,8 @@
   - use `infra/nginx/telegram_webhook.prod.conf`
   - install systemd services from `infra/systemd/`
   - run `bash scripts/deploy/healthcheck_webhook.sh`
+  - run `bash scripts/deploy/validate_webhook_cutover.sh`
+  - complete `docs/webhook-cutover-checklist.md`
 
 ## 5) Rollback drill
 - Revert latest merge commit if runtime regression appears.
