@@ -66,3 +66,11 @@ python apps/backtester/report.py
 
 ## Portfolio ledger
 Executed/paper/dry-run trade intents are recorded in `data/portfolio.db` for lightweight metrics.
+
+## Controlled automation (optional)
+You can enable strict auto-approval for high-confidence symbols only:
+- `AUTO_APPROVE_ENABLED=true`
+- `AUTO_APPROVE_MIN_CONFIDENCE=0.90`
+- `AUTO_APPROVE_SYMBOLS=SPY,QQQ`
+
+Default is disabled (`false`).
