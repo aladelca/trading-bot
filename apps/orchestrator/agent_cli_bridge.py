@@ -5,6 +5,7 @@ import json
 import os
 
 from src.agents.comms import AgentSessionBridge
+from src.storage.audit_log import AuditLogger
 
 
 def main() -> None:
@@ -23,11 +24,14 @@ def main() -> None:
     }
     allowed_commands = {c.strip() for c in os.getenv("AGENT_CLI_ALLOWED_COMMANDS", "python").split(",") if c.strip()}
 
+    audit = AuditLogger(os.getenv("AUDIT_DB_PATH", "data/audit.db"))
     bridge = AgentSessionBridge(
         allowed_routes={(a.lower(), b.lower()) for a, b in allowed_routes},
         cli_enabled=os.getenv("AGENT_CLI_ENABLED", "false").lower() in {"1", "true", "yes", "on"},
         cli_allowed_commands=allowed_commands,
         cli_timeout_seconds=float(os.getenv("AGENT_CLI_TIMEOUT_SECONDS", "5")),
+        cli_max_retries=int(os.getenv("AGENT_CLI_MAX_RETRIES", "1")),
+        audit=audit,
     )
 
     env = bridge.send(
