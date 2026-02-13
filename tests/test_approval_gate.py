@@ -28,4 +28,4 @@ def test_approval_gate_policy_auto_approve(monkeypatch):
     signal = TradeSignal("SPY", "buy", 0.9, 500, 495, 510, "test")
     approved, source, _rid = gate.request_with_meta(signal)
     assert approved is True
-    assert source == "policy-auto"
+    assert source.startswith("policy-auto:")
