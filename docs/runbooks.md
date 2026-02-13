@@ -39,6 +39,13 @@
 ### C) Approval anomalies
 - Verify Telegram bot token/chat id.
 - Confirm callback updates and offset progression.
+- In webhook mode, verify worker is consuming pending callback queue.
+
+## Webhook deployment baseline
+- Start services scaffold:
+  - `docker compose -f infra/docker/docker-compose.webhook.yml up -d`
+- Ensure certificate files are present in `infra/nginx/certs/`.
+- Validate webhook path and secret header handling.
 
 ## 5) Rollback drill
 - Revert latest merge commit if runtime regression appears.

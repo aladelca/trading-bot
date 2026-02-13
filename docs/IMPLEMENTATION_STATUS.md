@@ -29,7 +29,7 @@ Updated: 2026-02-13
 - 🟡 Portfolio/monitoring metrics: lightweight ledger and notional metrics added; advanced realized/unrealized PnL not finalized.
 
 ## Not Yet Implemented
-- ⬜ Production webhook deployment hardening (TLS, reverse proxy, public exposure, queue-based async workers).
+- ⬜ Production webhook deployment finalization (real cert provisioning, external DNS/domain, process supervision in target host).
 - ⬜ Full micro-live weekly postmortem template automation (basic runbook now exists in docs/runbooks.md).
 - ⬜ Advanced controlled-automation policy orchestration (basic env-driven auto-approve rules now implemented).
 

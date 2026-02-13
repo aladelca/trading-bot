@@ -22,8 +22,11 @@ _Last updated: 2026-02-13_
 - TBOT-13 Broker retry matrix and error taxonomy hardening ✅
 - TBOT-14 Advanced realized/unrealized PnL engine ✅
 
+### Done
+- TBOT-15 Weekly postmortem automation ✅
+
 ### In Progress
-- TBOT-15 Weekly postmortem automation 🔄
+- WEBHOOK-HARDEN-1 Deployment hardening baseline (TLS/reverse-proxy/worker scaffold) 🔄
 
 ## Epic TBOT-EPIC-2: Agentic Autonomy with Governance
 - Status: **IN PROGRESS**
