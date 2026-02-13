@@ -134,6 +134,16 @@ python apps/backtester/threshold_tuning.py \
   --kpi-json '{"approval_rate":0.58,"equity_pnl_total":3.4,"signals_rejected":11}'
 ```
 
+Governance recommendation approval workflow (human decision):
+```bash
+python apps/backtester/governance_approval_workflow.py \
+  --recommendation-json '{"recommended_auto_approve_min_confidence":0.9,"recommended_allowed_tiers":["tier-1","tier-2"]}' \
+  --decision change-set \
+  --overrides-json '{"recommended_auto_approve_min_confidence":0.92}' \
+  --decided-by adrian \
+  --reason "keep risk tight"
+```
+
 Manual CLI bridge invocation example:
 ```bash
 python apps/orchestrator/agent_cli_bridge.py \
