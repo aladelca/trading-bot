@@ -67,6 +67,12 @@ Generate realized/unrealized PnL and save a snapshot:
 python apps/backtester/pnl_report.py
 ```
 
+## Weekly postmortem report
+Generate weekly KPI + drift + learning recommendations:
+```bash
+python apps/backtester/weekly_postmortem.py
+```
+
 ## Agentic supervisor cycle
 Run the new supervised multi-agent pipeline skeleton:
 ```bash

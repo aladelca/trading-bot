@@ -4,6 +4,7 @@ import os
 from dataclasses import asdict
 from uuid import uuid4
 
+from src.agents.automation_policy import choose_auto_approve_tier, tier_allows_auto_approve
 from src.signals.models import TradeSignal
 from src.telegram.client import TelegramClient, TelegramConfig
 
@@ -24,16 +25,17 @@ class ApprovalGate:
         if not enabled:
             return None
 
-        min_conf = float(os.getenv("AUTO_APPROVE_MIN_CONFIDENCE", "0.0"))
         symbols_raw = os.getenv("AUTO_APPROVE_SYMBOLS", "")
         symbols = {s.strip().upper() for s in symbols_raw.split(",") if s.strip()}
+        tier = choose_auto_approve_tier(signal.confidence)
 
+        min_conf = float(os.getenv("AUTO_APPROVE_MIN_CONFIDENCE", "0.0"))
         if signal.confidence < min_conf:
             return None
-        if symbols and signal.symbol.upper() not in symbols:
+        if not tier_allows_auto_approve(tier, signal.symbol, symbols):
             return None
 
-        return True, "policy-auto", request_id
+        return True, f"policy-auto:{tier}", request_id
 
     def request_with_meta(self, signal: TradeSignal) -> tuple[bool, str, str]:
         if not self.required:

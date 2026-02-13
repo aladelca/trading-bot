@@ -21,6 +21,8 @@ Updated: 2026-02-13
 - ✅ Telegram webhook baseline with idempotent callback persistence (`apps/telegram_webhook/server.py`, `src/webhook/*`)
 - ✅ Broker hardening baseline (error taxonomy + retry/backoff + idempotency key propagation)
 - ✅ Advanced PnL baseline (realized/unrealized + avg cost + snapshot persistence)
+- ✅ Weekly postmortem automation baseline (`apps/backtester/weekly_postmortem.py`)
+- ✅ Governance baselines: learning recommendations + drift detection + rollback guidance + escalation tiers
 
 ## Partially Implemented
 - 🟡 Questrade live order path: symbolId + retry/idempotency baseline implemented; broker-specific validation matrix and SLA tuning remain.

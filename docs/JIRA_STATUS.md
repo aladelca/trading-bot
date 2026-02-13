@@ -4,7 +4,7 @@ _Last updated: 2026-02-13_
 
 ## Epic TBOT-EPIC-1: Core v1 Trading Pipeline
 - Status: **IN PROGRESS**
-- Progress: 80%
+- Progress: 92%
 
 ### Done
 - TBOT-1 Scaffold + config baseline ✅
@@ -17,25 +17,22 @@ _Last updated: 2026-02-13_
 - TBOT-8 SymbolId resolution baseline ✅
 - TBOT-9 Portfolio ledger baseline ✅
 - TBOT-10 Ops runbook baseline ✅
-
-### Done
 - TBOT-11 Agentic supervisor architecture and contracts ✅
 - TBOT-12 Telegram production webhook + idempotent callback store ✅
 - TBOT-13 Broker retry matrix and error taxonomy hardening ✅
-
-### Done
 - TBOT-14 Advanced realized/unrealized PnL engine ✅
-- TBOT-14 Advanced realized/unrealized PnL engine
-- TBOT-15 Weekly postmortem automation
-
-## Epic TBOT-EPIC-2: Agentic Autonomy with Governance
-- Status: **PLANNED**
-- Progress: 20%
 
 ### In Progress
-- TBOT-A1 Multi-agent contracts and supervisor skeleton 🔄
+- TBOT-15 Weekly postmortem automation 🔄
 
-### To Do
-- TBOT-A2 Learning/review agent reports
-- TBOT-A3 Controlled auto-approve policy escalation matrix
-- TBOT-A4 Drift detection and rollback recommendations
+## Epic TBOT-EPIC-2: Agentic Autonomy with Governance
+- Status: **IN PROGRESS**
+- Progress: 55%
+
+### Done
+- TBOT-A1 Multi-agent contracts and supervisor skeleton ✅
+
+### In Progress
+- TBOT-A2 Learning/review agent reports 🔄
+- TBOT-A3 Controlled auto-approve policy escalation matrix 🔄
+- TBOT-A4 Drift detection and rollback recommendations 🔄
