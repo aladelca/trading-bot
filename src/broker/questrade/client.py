@@ -11,6 +11,7 @@ from src.execution.errors import classify_broker_error
 from src.execution.idempotency import build_order_idempotency_key
 from src.execution.retry import RetryPolicy, with_retry
 from src.execution.validation import validate_order_matrix
+from src.execution.validation_rollout import resolve_validation_mode
 
 
 class QuestradeClient(BrokerClient):
@@ -141,7 +142,14 @@ class QuestradeClient(BrokerClient):
 
     def submit_order(self, order: OrderRequest, dry_run: bool = True, request_id: str = "") -> dict:
         validation = validate_order_matrix(order, broker="questrade")
-        validation_mode = os.getenv("BROKER_VALIDATION_MODE", "enforce").strip().lower()
+        rollout = resolve_validation_mode(
+            configured_mode=os.getenv("BROKER_VALIDATION_MODE", "enforce"),
+            report_only_since_utc=os.getenv("BROKER_VALIDATION_REPORT_ONLY_SINCE_UTC", ""),
+            report_only_max_minutes=int(os.getenv("BROKER_VALIDATION_REPORT_ONLY_MAX_MINUTES", "0")),
+            auto_revert_enabled=os.getenv("BROKER_VALIDATION_AUTO_REVERT", "true").lower() in {"1", "true", "yes", "on"},
+        )
+        validation_mode = rollout["effective_mode"]
+
         validation_warning = None
         if not validation.ok:
             if validation_mode == "report_only":
@@ -149,6 +157,7 @@ class QuestradeClient(BrokerClient):
                     "reason": validation.reason,
                     "rejection_source": "pre_trade_validation",
                     "validation_mode": validation_mode,
+                    "rollout": rollout,
                 }
             else:
                 return {
@@ -157,6 +166,7 @@ class QuestradeClient(BrokerClient):
                     "broker": "questrade",
                     "rejection_source": "pre_trade_validation",
                     "validation_mode": validation_mode,
+                    "rollout": rollout,
                 }
 
         if dry_run:
