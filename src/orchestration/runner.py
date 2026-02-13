@@ -15,7 +15,10 @@ from src.telegram.approval import ApprovalGate
 
 def run_once(settings: AppSettings, policy: RiskPolicy, audit: AuditLogger) -> list[dict]:
     state = PortfolioState(equity=10000)
-    approval = ApprovalGate(required=settings.runtime.approval_required)
+    approval = ApprovalGate(
+        required=settings.runtime.approval_required,
+        timeout_seconds=settings.runtime.approval_timeout_seconds,
+    )
     paper = PaperExecutionEngine()
 
     fills: list[dict] = []

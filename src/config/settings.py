@@ -12,6 +12,7 @@ class RuntimeSettings:
     paper_mode: bool
     timezone: str
     approval_required: bool
+    approval_timeout_seconds: int
     allow_extended_hours: bool
     symbols: list[str]
 
@@ -54,12 +55,16 @@ def load_settings(config_dir: str = "config") -> AppSettings:
 
     min_signal_score = float(settings_yaml.get("strategy", {}).get("min_signal_score", 0.65))
     approval_required = _as_bool(os.getenv("APPROVAL_REQUIRED"), True)
+    approval_timeout_seconds = int(
+        os.getenv("APPROVAL_TIMEOUT_SECONDS", settings_yaml.get("approval", {}).get("expiry_seconds", 300))
+    )
 
     return AppSettings(
         runtime=RuntimeSettings(
             paper_mode=paper_mode,
             timezone=timezone,
             approval_required=approval_required,
+            approval_timeout_seconds=approval_timeout_seconds,
             allow_extended_hours=allow_extended_hours,
             symbols=symbol_list,
         ),

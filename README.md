@@ -8,8 +8,8 @@ Human-in-the-loop scaffold for a news-driven **stocks/ETF** trading bot (Questra
 - ✅ Symbol whitelist enforcement
 - ✅ Signal + approval + fill audit logging (SQLite)
 - ✅ Signal placeholder from free news feed interface
-- ✅ Telegram approval gate placeholder
-- ✅ Questrade adapter stub (credentials pending)
+- ✅ Telegram approval client wiring (inline approve/reject + polling)
+- ✅ Questrade token/account integration primitives (live execution still disabled)
 - ❌ No live trading enabled yet
 
 ## Why extended hours can help
