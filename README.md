@@ -341,3 +341,9 @@ Validation anomaly triage + remediation matrix:
 python apps/backtester/broker_validation_triage.py \
   --records-json '[{"status":"error","rejection_source":"broker_api"},{"status":"blocked","rejection_source":"pre_trade_validation"}]'
 ```
+
+Validation anomaly auto-remediation hooks (dry-run by default):
+```bash
+python apps/backtester/broker_validation_remediation.py \
+  --triage-json '{"findings":[{"alert":"broker_error_rate_above_threshold","owner":"broker-integration","severity":"high"}]}'
+```
