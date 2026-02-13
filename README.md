@@ -273,6 +273,13 @@ python apps/telegram_webhook/alert_delivery_runner.py \
   --max-attempts 3 \
   --backoff-seconds 0.2
 ```
+Provider connector + signed delivery receipts:
+```bash
+python apps/telegram_webhook/alert_delivery_runner.py \
+  --delivery-dir apps/telegram_webhook/reports/delivery \
+  --provider telegram \
+  --signing-key "<receipt-signing-key>"
+```
 
 ## Plan tracking
 - Implementation status vs plan: `docs/IMPLEMENTATION_STATUS.md`
