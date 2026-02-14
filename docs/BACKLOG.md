@@ -1,10 +1,10 @@
 # Product Backlog (Prioritized)
 
 ## P1 (High)
-1. **WEBHOOK-HARDEN-8** - Provider ack verification and receipt tamper validation pipeline
-2. **TBOT-A23** - Governance override quorum policy templates + role-based signer matrix
-3. **TBOT-A24** - Governance stale-ticket SLA tracking + escalation routing
-4. **BROKER-VALID-8** - Remediation hook execution audit trail + rollback hooks
+1. **TBOT-A23** - Governance override quorum policy templates + role-based signer matrix
+2. **TBOT-A24** - Governance stale-ticket SLA tracking + escalation routing
+3. **BROKER-VALID-8** - Remediation hook execution audit trail + rollback hooks
+4. **WEBHOOK-HARDEN-9** - Receipt revocation list and replay-attack guardrails
 
 ## P2 (Medium)
 6. **TBOT-A8** - Agent communication observability (delivery audit + retry/dead-letter policy)
@@ -13,6 +13,10 @@
 9. Policy simulation sandbox for approval/risk changes
 
 ## Completed Recently
+- **WEBHOOK-HARDEN-8** - Provider ack verification + receipt tamper validation baseline
+  - Added receipt verification helpers for provider ack completeness
+  - Added signature tamper checks for HMAC-signed delivery receipts
+  - Added validation CLI + tests for verified/mismatch/missing-ack outcomes
 - **BROKER-VALID-7** - Validation anomaly auto-remediation runbook execution hooks baseline
   - Hook planner from triage findings to runbook hook registry
   - Dry-run/default execution harness with deterministic outcomes

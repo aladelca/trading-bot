@@ -26,6 +26,7 @@ Updated: 2026-02-13
 - ✅ Webhook evidence/alert routing baseline (evidence manifest + incident routing manifest + pipeline)
 - ✅ Webhook alert delivery baseline (connector runner + retry/dead-letter policy)
 - ✅ Webhook provider+receipt baseline (provider connector abstraction + signed receipts)
+- ✅ Webhook receipt integrity baseline (provider ack verification + tamper validation)
 - ✅ Broker hardening baseline (error taxonomy + retry/backoff + idempotency key propagation)
 - ✅ Broker validation edge-matrix baseline v2 (symbol/side hygiene + quantity caps + Questrade extended-hours constraints)
 - ✅ Broker validation rollout/telemetry baseline v3 (`BROKER_VALIDATION_MODE` + rejection source telemetry)
