@@ -296,6 +296,12 @@ python apps/telegram_webhook/alert_delivery_runner.py \
   --provider telegram \
   --signing-key "<receipt-signing-key>"
 ```
+Validate provider ack + receipt tamper integrity:
+```bash
+python apps/telegram_webhook/alert_receipt_validate.py \
+  --receipts-dir apps/telegram_webhook/reports/delivery/receipts \
+  --signing-key "<receipt-signing-key>"
+```
 
 ## Plan tracking
 - Implementation status vs plan: `docs/IMPLEMENTATION_STATUS.md`
